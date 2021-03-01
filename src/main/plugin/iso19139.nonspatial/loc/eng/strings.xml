@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (C) 2001-2016 Food and Agriculture Organization of the
+  ~ United Nations (FAO-UN), United Nations World Food Programme (WFP)
+  ~ and United Nations Environment Programme (UNEP)
+  ~
+  ~ This program is free software; you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation; either version 2 of the License, or (at
+  ~ your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful, but
+  ~ WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+  ~ General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program; if not, write to the Free Software
+  ~ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
+  ~
+  ~ Contact: Jeroen Ticheler - FAO - Viale delle Terme di Caracalla 2,
+  ~ Rome - Italy. email: geonetwork@osgeo.org
+  -->
+
+<strings>
+  <understandResource>Information about the dataset</understandResource>
+  <relatedResources>Related services and linked data</relatedResources>
+  <techInfo>Technical information</techInfo>
+  <contactInfo>Contact information</contactInfo>
+  <mdContactInfo>Metadata contact</mdContactInfo>
+  <refDate>Reference date</refDate>
+  <temporalRef>Temporal information</temporalRef>
+  <constraintInfo>Access constraint information</constraintInfo>
+  <xml_iso19139>Save this metadata as an ISO19139 XML file</xml_iso19139>
+  <xml_iso19139Tooai_dc>Save this metadata as an OAI Dublin Core XML file</xml_iso19139Tooai_dc>
+
+  <!-- New strings added for the AngularJS editor -->
+  <!-- View and tabs -->
+  <advanced>Full</advanced>
+  <default>Simple</default>
+  <simple>Simple</simple>
+  <inspire>INSPIRE</inspire>
+  <inspire_sds>SDS</inspire_sds>
+  <nonspatial>Non-spatial</nonspatial>
+
+  <keywordFrom>Keywords - </keywordFrom>
+  <resource>Resource</resource>
+  <xml>XML</xml>
+  <metadata>Metadata</metadata>
+  <identificationInfo>Identification</identificationInfo>
+  <distributionInfo>Distribution</distributionInfo>
+  <dataQualityInfo>Quality</dataQualityInfo>
+  <spatialRepresentationInfo>Spatial rep.</spatialRepresentationInfo>
+  <referenceSystemInfo>Ref. system</referenceSystemInfo>
+  <contentInfo>Content</contentInfo>
+  <portrayalCatalogueInfo>Portrayal</portrayalCatalogueInfo>
+  <metadataConstraints>Md. constraints</metadataConstraints>
+  <metadataMaintenance>Md. maintenance</metadataMaintenance>
+  <applicationSchemaInfo>Schema info</applicationSchemaInfo>
+  <noThesaurusName>Keywords</noThesaurusName>
+  <bboxesSection>Geographic coverage</bboxesSection>
+  <overviews>Overviews</overviews>
+  <metadataInXML>XML</metadataInXML>
+  <providedBy>Provided by</providedBy>
+  <shareOnSocialSite>Share on social sites</shareOnSocialSite>
+  <viewMode>Views</viewMode>
+  <linkToPortal>Access to the portal</linkToPortal>
+  <linkToPortal-help>Read here the full details and access to the data.</linkToPortal-help>
+  <citationProposal>Citation proposal</citationProposal>
+  <citationProposal-help>This proposal was automatically generated, check if the metadata authors did not specified custom citation requirements.</citationProposal-help>
+  <associatedResources>Associated resources</associatedResources>
+
+  <!-- XSD error translation -->
+  <invalidElement>Invalid content found at element </invalidElement>
+  <onElementOf>One of the following elements </onElementOf>
+  <isExpected> is expected.</isExpected>
+  <isNotComplete> is not complete.</isNotComplete>
+  <elementLocated> Parent element is </elementLocated>
+  <missingElement>Missing element in </missingElement>
+  <invalidValue>Invalid or missing value.</invalidValue>
+  <notValidFor> is not a valid value for </notValidFor>
+  <xsdErrorIs>XSD error is: </xsdErrorIs>
+  <inElement> in element </inElement>
+  <enum1>Value </enum1>
+  <enum2> is not valid for the field </enum2>
+  <enum3>Potential values are: </enum3>
+
+  <!-- INSPIRE view labels and help -->
+  <url>Online resource</url>
+  <identifier>Resource identifier</identifier>
+  <rsIdentifier>Projection</rsIdentifier>
+  <referenceDate>Temporal information</referenceDate>
+  <creationDate>Creation date</creationDate>
+  <hierarchyLevel>Hierarchy level</hierarchyLevel>
+  <publicationDate>Publication date</publicationDate>
+  <revisionDate>Revision date</revisionDate>
+  <temporalRangeSection>Temporal extent</temporalRangeSection>
+  <beginPosition>Begin</beginPosition>
+  <endPosition>End</endPosition>
+  <conformity>Conformity</conformity>
+  <conformity_title>Title</conformity_title>
+  <conformity_date>Date</conformity_date>
+  <explanation>Explanation</explanation>
+  <pass>Conformity</pass>
+  <indeterminatePosition>Indeterminate position</indeterminatePosition>
+  <pointOfContact>Contact for the resource</pointOfContact>
+  <metadataPointOfContact>Contact for the metadata</metadataPointOfContact>
+  <organisationName>Organisation name</organisationName>
+  <electronicMailAddress>Email</electronicMailAddress>
+  <role>Role</role>
+  <encoding>Encoding</encoding>
+  <inspireTheme>INSPIRE themes</inspireTheme>
+  <inspireThemeURI>INSPIRE themes</inspireThemeURI>
+  <format>Format</format>
+  <format_version>Version</format_version>
+  <format_specification>Specification</format_specification>
+  <lineage>Lineage</lineage>
+  <spatialResolution>Spatial resolution (scale)</spatialResolution>
+  <spatialDistance>Spatial resolution (distance)</spatialDistance>
+  <accessConstraints>Access constraints</accessConstraints>
+  <useConstraints>Use constraints</useConstraints>
+  <useLimitation>Use limitation</useLimitation>
+  <add-resource-id>Compute resource identifier</add-resource-id>
+  <add-resource-idHelp>Compose the resource identifier using the catalog URL and the metadata
+    identifier (eg. http://www.organization.org/catalogue/5391bf69-44bc-4ea0-8cc0-6cf6c3bc81ae).
+  </add-resource-idHelp>
+  <add-extent-from-geokeywords>Compute extent from keyword</add-extent-from-geokeywords>
+  <add-extent-from-geokeywordsHelp>Analyze each keyword of type place and add matching extent.
+  </add-extent-from-geokeywordsHelp>
+  <classificationSection>Classification of data and services</classificationSection>
+  <temporalSection>Temporal reference</temporalSection>
+  <restrictionsSection>Restrictions on access and use</restrictionsSection>
+  <metadataSection>Metadata information</metadataSection>
+  <responsibleOrganisationSection>Responsible organization (s)</responsibleOrganisationSection>
+  <qualityAndValiditySection>Quality and validity</qualityAndValiditySection>
+  <spatialRepresentationType>Spatial representation type</spatialRepresentationType>
+  <topicCategory>Topic category code</topicCategory>
+  <metadataLanguage>Metadata language</metadataLanguage>
+  <inspireServiceTaxonomy>INSPIRE Service Taxonomy</inspireServiceTaxonomy>
+  <otherConstraints>Other constraints</otherConstraints>
+  <operatesOn>Coupled resource</operatesOn>
+  <extent>Geographic bounding box</extent>
+  <spatialExtent>Spatial extent</spatialExtent>
+
+  <freeTextKeywords>Other keywords</freeTextKeywords>
+  <resource_url>URL</resource_url>
+  <resource_protocol>Protocol</resource_protocol>
+
+  <distributionFormat>Distribution Format</distributionFormat>
+
+  
+
+  <trueValue>Yes</trueValue>
+  <falseValue>No</falseValue>
+  <nilValue>Undefined</nilValue>
+  <logo>logo</logo>
+  <overview>overview</overview>
+  <thumbnail>thumbnail</thumbnail>
+  <north>north</north>
+  <east>east</east>
+  <south>south</south>
+  <west>west</west>
+
+  <!-- help strings for non-spatial -->
+  <title_help><div class="row">
+    <div class="col-xs-offset-2 col-xs-8">
+      <p class="help-block">The title of the resource (mandatory)</p></div></div></title_help>
+  <alttitle_help><div class="row">
+    <div class="col-xs-offset-2 col-xs-8">
+      <p class="help-block">An alternative title for the resource (optional)</p></div></div></alttitle_help>
+  <date_help><div class="row">
+    <div class="col-xs-offset-2 col-xs-8">
+      <p class="help-block">The date the resource was created (mandatory), and the most recent revision date</p></div></div></date_help>
+  <abstract_help><div class="row">
+    <div class="col-xs-offset-2 col-xs-8">
+      <p class="help-block">A description of the resource (mandatory)</p></div></div></abstract_help>
+  <pointofcontact_help><div class="row">
+    <div class="col-xs-offset-2 col-xs-8">
+      <p class="help-block">The point(s) of contact for the resource (mandatory)</p></div></div></pointofcontact_help>
+  <updatefreq_help><div class="row">
+    <div class="col-xs-offset-2 col-xs-8">
+      <p class="help-block">The frequency at which the resource is updated. Choose from the dropdown list (mandatory)</p></div></div></updatefreq_help>
+  <keywords_help><div class="row">
+    <div class="col-xs-offset-2 col-xs-8">
+      <p class="help-block">Keywords describing the resource (optional)</p></div></div></keywords_help>
+  <topiccategory_help><div class="row">
+    <div class="col-xs-offset-2 col-xs-8">
+      <p class="help-block">A topic for the resource (optional)</p></div></div></topiccategory_help>
+  <tempextent_help><div class="row">
+    <div class="col-xs-offset-2 col-xs-8">
+      <p class="help-block">The temporal extent of the resource (optional)</p></div></div></tempextent_help>
+  <distributionformat_help><div class="row">
+    <div class="col-xs-offset-2 col-xs-8">
+      <p class="help-block">The format in which the resource is distributed (mandatory)</p></div></div></distributionformat_help>
+  <onlineresource_help><div class="row">
+    <div class="col-xs-offset-2 col-xs-8">
+      <p class="help-block">A online link to the resource or to a page describing it (mandatory)</p></div></div></onlineresource_help>
+  <lineage_help><div class="row">
+    <div class="col-xs-offset-2 col-xs-8">
+      <p class="help-block">The process used to create the resource (mandatory)</p></div></div></lineage_help>
+</strings>
