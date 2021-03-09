@@ -12,7 +12,7 @@
                 xmlns:exslt="http://exslt.org/common" exclude-result-prefixes="#all">
 
   <!-- Readonly elements -->
- <xsl:template mode="mode-iso19139" priority="5000" match="gmd:metadataStandardName[$schema='iso19139.nonspatial']|gmd:metadataStandardVersion[$schema='iso19139.nonspatial']">
+ <xsl:template mode="mode-iso19139" priority="5000" match="gmd:metadataStandardName[$schema='iso19139.nonspatial']|gmd:metadataStandardVersion[$schema='iso19139.nonspatial']|gmd:hierarchyLevelName[$schema='iso19139.nonspatial']">
     <xsl:param name="schema" select="$schema" required="no"/>
     <xsl:param name="labels" select="$labels" required="no"/>
     <xsl:param name="overrideLabel" select="''" required="no"/>

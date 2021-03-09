@@ -147,6 +147,8 @@
   <resource_protocol>Protocol</resource_protocol>
 
   <distributionFormat>Distribution Format</distributionFormat>
+  <addDistFormat>Add Distribution Format</addDistFormat>
+  <addOnlineResource>Add Online Resource</addOnlineResource>
 
   
 
