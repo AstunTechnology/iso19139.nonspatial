@@ -34,7 +34,7 @@
                 xmlns:xslUtils="java:org.fao.geonet.util.XslUtil"
                 version="1.0">
 
-  <xsl:import href="../metadata-rdf.xsl"/>
+  <xsl:import href="../present/metadata-rdf.xsl"/>
 
   <xsl:variable name="url" select="xslUtils:getSiteUrl()"/>
   <xsl:variable name="language" select="xslUtils:getLanguage()"/>
@@ -50,7 +50,13 @@
              xmlns:foaf="http://xmlns.com/foaf/0.1/"
              xmlns:void="http://www.w3.org/TR/void/"
              xmlns:dcat="http://www.w3.org/ns/dcat#">
+
+      <xsl:call-template name="catalogue"/> 
+
       <xsl:apply-templates select="." mode="to-dcat"/>
+
+      <xsl:apply-templates mode="references" select="."/> 
+
     </rdf:RDF>
   </xsl:template>
 
@@ -163,7 +169,7 @@
       </skos:ConceptScheme>
     </xsl:for-each>
 -->
-  </xsl:template>
+  </xsl:template> 
 
   <!-- ============================================================================================ -->
 
