@@ -32,4 +32,56 @@
 >
 
   <xsl:import href="../../iso19139/index-fields/index-subtemplate.xsl" />
+<!-- conformity directory entries -->
+
+    <xsl:template mode="index" match="gmd:DQ_DomainConsistency[count(ancestor::node()) =  1]">
+    <xsl:variable name="date"
+                  select="*/gmd:specification/*/gmd:date/*/gmd:date/gco:Date"/>
+    <Field name="_title"
+           string="{gmd:result/*/gmd:explanation/gco:CharacterString}{if ($date != '') then concat(' (', $date, ')') else ''}"
+           store="true" index="true"/>
+
+        <xsl:call-template name="subtemplate-common-fields"/>
+    </xsl:template>
+
+    <xsl:template mode="index" match="gmd:DQ_CompletenessCommission[count(ancestor::node()) =  1]">
+    <xsl:variable name="date"
+                  select="*/gmd:specification/*/gmd:date/*/gmd:date/gco:Date"/>
+    <Field name="_title"
+           string="{gmd:result/*/gmd:explanation/gco:CharacterString/text()}{if ($date != '') then concat(' (', $date, ')') else ''}"
+           store="true" index="true"/>
+
+        <xsl:call-template name="subtemplate-common-fields"/>
+    </xsl:template>
+
+    <!-- use constraints directory entries -->
+
+    <xsl:template mode="index" match="gmd:resourceConstraints/[*/gmd:useConstraints]">
+    <!-- <xsl:variable name="date"
+                  select="*/gmd:specification/*/gmd:date/*/gmd:date/gco:Date"/> -->
+    <Field name="_title"
+           string="{gmd:MD_LegalConstraints/gmd:otherConstraints/gmx:Anchor/text()}"
+           store="true" index="true"/>
+
+        <xsl:call-template name="subtemplate-common-fields"/>
+    </xsl:template>
+
+
+    <!-- access constraints directory entries -->
+
+     <xsl:template mode="index" match="gmd:resourceConstraints/[*/gmd:accessConstraints]">
+    <!-- <xsl:variable name="date"
+                  select="*/gmd:specification/*/gmd:date/*/gmd:date/gco:Date"/> -->
+    <Field name="_title"
+           string="{gmd:MD_LegalConstraints/gmd:otherConstraints/gmx:Anchor/text()}"
+           store="true" index="true"/>
+
+        <xsl:call-template name="subtemplate-common-fields"/>
+    </xsl:template>
+
+
+    <xsl:template name="subtemplate-common-fields">
+        <Field name="any" string="{normalize-space(string(.))}" store="false" index="true"/>
+        <Field name="_root" string="{name(.)}" store="true" index="true"/>
+    </xsl:template>
 </xsl:stylesheet>
