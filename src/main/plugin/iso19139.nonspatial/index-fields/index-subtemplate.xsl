@@ -56,7 +56,7 @@
 
     <!-- use constraints directory entries -->
 
-    <xsl:template mode="index" match="gmd:resourceConstraints/[*/gmd:useConstraints]">
+    <xsl:template mode="index" match="gmd:resourceConstraints[*/gmd:useConstraints]">
     <!-- <xsl:variable name="date"
                   select="*/gmd:specification/*/gmd:date/*/gmd:date/gco:Date"/> -->
     <Field name="_title"
@@ -69,7 +69,7 @@
 
     <!-- access constraints directory entries -->
 
-     <xsl:template mode="index" match="gmd:resourceConstraints/[*/gmd:accessConstraints]">
+     <xsl:template mode="index" match="gmd:resourceConstraints[*/gmd:accessConstraints]">
     <!-- <xsl:variable name="date"
                   select="*/gmd:specification/*/gmd:date/*/gmd:date/gco:Date"/> -->
     <Field name="_title"
