@@ -38,7 +38,7 @@
                 xmlns:gml320="http://www.opengis.net/gml"
                 xmlns:ogc="http://www.opengis.net/rdf#"
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
-                xmlns:iso19139="http://geonetwork-opensource.org/schemas/iso19139"
+                xmlns:iso19139nonspatial="http://geonetwork-opensource.org/schemas/iso19139nonspatial"
                 version="2.0"
                 extension-element-prefixes="saxon" exclude-result-prefixes="#all">
 
@@ -666,7 +666,7 @@
   <!--
     Get resource (dataset or service) identifier if set and return metadata UUID if not.
   -->
-  <xsl:function name="iso19139.nonspatial:getResourceCode" as="xs:string">
+  <xsl:function name="iso19139nonspatial:getResourceCode" as="xs:string">
     <xsl:param name="metadata" as="node()"/>
 
     <xsl:value-of select="if ($metadata/gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code/gco:CharacterString!='')
@@ -678,7 +678,7 @@
   <!--
     Get thesaurus identifier, otherCitationDetails value, citation @id or thesaurus title.
   -->
-  <xsl:function name="iso19139.nonspatial:getThesaurusCode" as="xs:string">
+  <xsl:function name="iso19139nonspatial:getThesaurusCode" as="xs:string">
     <xsl:param name="thesaurusName" as="node()"/>
 
     <xsl:value-of select="if ($thesaurusName/*/gmd:otherCitationDetails/*!='') then $thesaurusName/*/gmd:otherCitationDetails/*
@@ -689,7 +689,7 @@
   <!--
     Get contact identifier (for the time being = email and node generated identifier if no email available)
   -->
-  <xsl:function name="iso19139.nonspatial:getContactId" as="xs:string">
+  <xsl:function name="iso19139nonspatial:getContactId" as="xs:string">
     <xsl:param name="responsibleParty" as="node()"/>
 
     <xsl:value-of select="if ($responsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress/gco:CharacterString!='')
