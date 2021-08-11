@@ -56,7 +56,7 @@
   <!-- FIME : $url comes from a global variable. -->
   <xsl:template match="gmd:MD_Metadata|*[@gco:isoType='gmd:MD_Metadata']" mode="record-reference">
     <!-- TODO : a metadata record may contains aggregate. In that case create one dataset per aggregate member. -->
-    <dcat:dataset rdf:resource="{$resourcePrefix}/datasets/{iso19139:getResourceCode(.)}"/>
+    <dcat:dataset rdf:resource="{$resourcePrefix}/datasets/{iso19139nonspatial:getResourceCode(.)}"/>
     <dcat:record rdf:resource="{$resourcePrefix}/records/{gmd:fileIdentifier/gco:CharacterString}"/>
   </xsl:template>
 
@@ -75,7 +75,7 @@
 
     <dcat:CatalogRecord rdf:about="{$resourcePrefix}/records/{gmd:fileIdentifier/gco:CharacterString}">
 
-      <foaf:primaryTopic rdf:resource="{$resourcePrefix}/resources/{iso19139:getResourceCode(.)}"/>
+      <foaf:primaryTopic rdf:resource="{$resourcePrefix}/resources/{iso19139nonspatial:getResourceCode(.)}"/>
 
 
       <xsl:variable name="date" select="substring-before(gmd:dateStamp/gco:DateTime, 'T')"/>
@@ -133,9 +133,9 @@
       select="//gmd:MD_Keywords[(gmd:thesaurusName)]/gmd:keyword/gco:CharacterString" group-by=".">
       <!-- FIXME maybe only do that, if keyword URI is available (when xlink is used ?) -->
       <skos:Concept
-        rdf:about="{$resourcePrefix}/registries/vocabularies/{iso19139:getThesaurusCode(../../gmd:thesaurusName)}/concepts/{encode-for-uri(.)}">
+        rdf:about="{$resourcePrefix}/registries/vocabularies/{iso19139nonspatial:getThesaurusCode(../../gmd:thesaurusName)}/concepts/{encode-for-uri(.)}">
         <skos:inScheme
-          rdf:resource="{$resourcePrefix}/registries/vocabularies/{iso19139:getThesaurusCode(../../gmd:thesaurusName)}"/>
+          rdf:resource="{$resourcePrefix}/registries/vocabularies/{iso19139nonspatial:getThesaurusCode(../../gmd:thesaurusName)}"/>
         <skos:prefLabel>
           <xsl:value-of select="."/>
         </skos:prefLabel>
@@ -270,7 +270,7 @@
   <xsl:template
     match="srv:SV_ServiceIdentification|*[contains(@gco:isoType, 'SV_ServiceIdentification')]"
     mode="to-dcat">
-    <rdf:Description rdf:about="{$resourcePrefix}/resource/{iso19139:getResourceCode(../../.)}">
+    <rdf:Description rdf:about="{$resourcePrefix}/resource/{iso19139nonspatial:getResourceCode(../../.)}">
       <xsl:call-template name="to-dcat"/>
     </rdf:Description>
   </xsl:template>
@@ -284,7 +284,7 @@
   -->
   <xsl:template match="gmd:MD_DataIdentification|*[contains(@gco:isoType, 'MD_DataIdentification')]"
                 mode="to-dcat">
-    <dcat:Dataset rdf:about="{$resourcePrefix}/datasets/{iso19139:getResourceCode(../../.)}">
+    <dcat:Dataset rdf:about="{$resourcePrefix}/datasets/{iso19139nonspatial:getResourceCode(../../.)}">
       <xsl:call-template name="to-dcat"/>
     </dcat:Dataset>
   </xsl:template>
@@ -345,7 +345,7 @@
       select="gmd:descriptiveKeywords/gmd:MD_Keywords[(gmd:thesaurusName)]/gmd:keyword/gco:CharacterString">
       <!-- FIXME maybe only do that, if keyword URI is available (when xlink is used ?) -->
       <dcat:theme
-        rdf:resource="{$resourcePrefix}/registries/vocabularies/{iso19139:getThesaurusCode(../../gmd:thesaurusName)}/concepts/{.}"/>
+        rdf:resource="{$resourcePrefix}/registries/vocabularies/{iso19139nonspatial:getThesaurusCode(../../gmd:thesaurusName)}/concepts/{.}"/>
     </xsl:for-each>
     <!-- xpath: gmd:identificationInfo/*/gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/gmx:Anchor -->
     <!-- xpath: gmd:identificationInfo/*/gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/gco:CharaceterString -->
