@@ -637,9 +637,9 @@
               <rdf:value>
                 <xsl:value-of select="gmd:protocol/gco:CharacterString"/>
               </rdf:value>
-              <rdfs:label>
+ <!--              <rdfs:label>
                 <xsl:value-of select="gmd:protocol/gco:CharacterString"/>
-              </rdfs:label>
+              </rdfs:label> -->
             </dct:IMT>
           </dct:format>
         </xsl:if>
