@@ -609,11 +609,11 @@
         </dcat:accessURL>
         <!-- xpath: gmd:linkage/gmd:URL -->
 
-        <xsl:if test="gmd:name/gco:CharacterString!=''">
+        <!-- <xsl:if test="gmd:name/gco:CharacterString!=''">
           <dct:title>
             <xsl:value-of select=" gmd:name/gco:CharacterString"/>
           </dct:title>
-        </xsl:if>
+        </xsl:if> -->
         <!-- xpath: gmd:name/gco:CharacterString -->
 
         <!-- "The size of a distribution.":N/A
