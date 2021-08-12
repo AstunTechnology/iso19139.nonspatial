@@ -651,7 +651,7 @@
           </dct:license>
         </xsl:for-each> -->
         <xsl:for-each
-          select="$restrictions/gmd:MD_Constraints/gmd:useLimitation/gco:CharacterString">
+          select="$restrictions/gmd:MD_Constraints/gmd:accessConstraints/gmd:otherConstraints/gco:CharacterString">
           <dct:rights>
           <dct:license>
             <xsl:value-of select="."/>
