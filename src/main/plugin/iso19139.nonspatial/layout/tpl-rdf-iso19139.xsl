@@ -445,19 +445,19 @@
               xpath: //gmd:CI_ResponsibleParty-->
 
             <foaf:Agent>
-              <xsl:if test="gmd:individualName/gco:CharacterString">
+              <!-- <xsl:if test="gmd:individualName/gco:CharacterString">
                 <foaf:name>
                   <xsl:value-of select="gmd:individualName/gco:CharacterString"/>
                 </foaf:name>
-              </xsl:if>
+              </xsl:if> -->
               <!-- xpath: gmd:individualName/gco:CharacterString -->
-              <xsl:if
+              <!-- <xsl:if
                 test="gmd:contactInfo/gmd:CI_Contact/gmd:phone/gmd:CI_Telephone/gmd:voice/gco:CharacterString">
                 <foaf:phone>
                   <xsl:value-of
                     select="gmd:contactInfo/gmd:CI_Contact/gmd:phone/gmd:CI_Telephone/gmd:voice/gco:CharacterString"/>
                 </foaf:phone>
-              </xsl:if>
+              </xsl:if> -->
               <!-- xpath: gmd:contactInfo/gmd:CI_Contact/gmd:phone/gmd:CI_Telephone/gmd:voice/gco:CharacterString -->
               <xsl:if
                 test="gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress/gco:CharacterString">
