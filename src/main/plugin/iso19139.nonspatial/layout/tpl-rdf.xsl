@@ -39,6 +39,7 @@
                 xmlns:ogc="http://www.opengis.net/rdf#"
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:iso19139nonspatial="http://geonetwork-opensource.org/schemas/iso19139nonspatial"
+                xmlns:iso19139="http://geonetwork-opensource.org/schemas/iso19139"
                 version="2.0"
                 extension-element-prefixes="saxon" exclude-result-prefixes="#all">
 
@@ -56,7 +57,7 @@
   <!-- FIME : $url comes from a global variable. -->
   <xsl:template match="gmd:MD_Metadata|*[@gco:isoType='gmd:MD_Metadata']" mode="record-reference">
     <!-- TODO : a metadata record may contains aggregate. In that case create one dataset per aggregate member. -->
-    <dcat:dataset rdf:resource="{$resourcePrefix}/datasets/{iso19139nonspatial:getResourceCode(.)}"/>
+    <dcat:dataset rdf:resource="{$resourcePrefix}/datasets/{iso19139:getResourceCode(.)}"/>
     <dcat:record rdf:resource="{$resourcePrefix}/records/{gmd:fileIdentifier/gco:CharacterString}"/>
   </xsl:template>
 
@@ -64,7 +65,7 @@
   <!--
     Convert ISO record to DCAT
     -->
-  <xsl:template match="gmd:MD_Metadata|*[@gco:isoType='gmd:MD_Metadata']" mode="to-dcat">
+  <xsl:template match="gmd:MD_Metadata|*[@gco:isoType='gmd:MD_Metadata']" mode="ns-to-dcat">
 
 
     <!-- Catalogue records
@@ -75,7 +76,7 @@
 
     <dcat:CatalogRecord rdf:about="{$resourcePrefix}/records/{gmd:fileIdentifier/gco:CharacterString}">
 
-      <foaf:primaryTopic rdf:resource="{$resourcePrefix}/resources/{iso19139nonspatial:getResourceCode(.)}"/>
+      <foaf:primaryTopic rdf:resource="{$resourcePrefix}/resources/{iso19139:getResourceCode(.)}"/>
 
 
       <xsl:variable name="date" select="substring-before(gmd:dateStamp/gco:DateTime, 'T')"/>
@@ -93,7 +94,7 @@
     </dcat:CatalogRecord>
 
 
-    <xsl:apply-templates select="gmd:identificationInfo/*" mode="to-dcat"/>
+    <xsl:apply-templates select="gmd:identificationInfo/*" mode="ns-to-dcat"/>
 
   </xsl:template>
 
@@ -133,9 +134,9 @@
       select="//gmd:MD_Keywords[(gmd:thesaurusName)]/gmd:keyword/gco:CharacterString" group-by=".">
       <!-- FIXME maybe only do that, if keyword URI is available (when xlink is used ?) -->
       <skos:Concept
-        rdf:about="{$resourcePrefix}/registries/vocabularies/{iso19139nonspatial:getThesaurusCode(../../gmd:thesaurusName)}/concepts/{encode-for-uri(.)}">
+        rdf:about="{$resourcePrefix}/registries/vocabularies/{iso19139:getThesaurusCode(../../gmd:thesaurusName)}/concepts/{encode-for-uri(.)}">
         <skos:inScheme
-          rdf:resource="{$resourcePrefix}/registries/vocabularies/{iso19139nonspatial:getThesaurusCode(../../gmd:thesaurusName)}"/>
+          rdf:resource="{$resourcePrefix}/registries/vocabularies/{iso19139:getThesaurusCode(../../gmd:thesaurusName)}"/>
         <skos:prefLabel>
           <xsl:value-of select="."/>
         </skos:prefLabel>
@@ -224,7 +225,7 @@
           select="//gmd:CI_ResponsibleParty[gmd:organisationName/gco:CharacterString=current-grouping-key()]"
           group-by="gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress/gco:CharacterString">
           <foaf:member
-            rdf:resource="{$resourcePrefix}/persons/{encode-for-uri(iso19139:getContactId(.))}"/>
+            rdf:resource="{$resourcePrefix}/persons/{encode-for-uri(iso19139nonspatial:getContactId(.))}"/>
         </xsl:for-each-group>
       </foaf:Organization>
     </xsl:for-each-group>
@@ -236,7 +237,7 @@
 
         xpath: //gmd:CI_ResponsibleParty-->
 
-      <foaf:Agent rdf:about="{$resourcePrefix}/persons/{encode-for-uri(iso19139:getContactId(.))}">
+      <foaf:Agent rdf:about="{$resourcePrefix}/persons/{encode-for-uri(iso19139nonspatial:getContactId(.))}">
         <xsl:if test="gmd:individualName/gco:CharacterString">
           <foaf:name>
             <xsl:value-of select="gmd:individualName/gco:CharacterString"/>
@@ -269,9 +270,9 @@
   -->
   <xsl:template
     match="srv:SV_ServiceIdentification|*[contains(@gco:isoType, 'SV_ServiceIdentification')]"
-    mode="to-dcat">
+    mode="ns-to-dcat">
     <rdf:Description rdf:about="{$resourcePrefix}/resource/{iso19139nonspatial:getResourceCode(../../.)}">
-      <xsl:call-template name="to-dcat"/>
+      <xsl:call-template name="ns-to-dcat"/>
     </rdf:Description>
   </xsl:template>
 
@@ -283,18 +284,18 @@
     xpath: //gmd:MD_DataIdentification|//*[contains(@gco:isoType, 'MD_DataIdentification')]
   -->
   <xsl:template match="gmd:MD_DataIdentification|*[contains(@gco:isoType, 'MD_DataIdentification')]"
-                mode="to-dcat">
+                mode="ns-to-dcat">
     <dcat:Dataset rdf:about="{$resourcePrefix}/datasets/{iso19139nonspatial:getResourceCode(../../.)}">
-      <xsl:call-template name="to-dcat"/>
+      <xsl:call-template name="ns-to-dcat"/>
     </dcat:Dataset>
   </xsl:template>
 
 
   <!-- Build a dcat record for a dataset or service -->
-  <xsl:template name="to-dcat">
+  <xsl:template name="ns-to-dcat">
     <!-- "A unique identifier of the dataset." -->
     <dct:identifier>
-      <xsl:value-of select="iso19139:getResourceCode(../../.)"/>
+      <xsl:value-of select="iso19139nonspatial:getResourceCode(../../.)"/>
     </dct:identifier>
     <!-- xpath: gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code -->
 
@@ -435,7 +436,7 @@
             select="//gmd:CI_ResponsibleParty[gmd:organisationName/gco:CharacterString=current-grouping-key()]"
             group-by="gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress/gco:CharacterString">
             <foaf:member
-              rdf:resource="{$resourcePrefix}/persons/{encode-for-uri(iso19139:getContactId(.))}"/>
+              rdf:resource="{$resourcePrefix}/persons/{encode-for-uri(iso19139nonspatial:getContactId(.))}"/>
           </xsl:for-each-group>-->
 
           <xsl:for-each-group select="."
