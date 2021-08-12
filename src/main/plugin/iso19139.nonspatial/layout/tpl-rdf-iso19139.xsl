@@ -156,7 +156,7 @@
     <xsl:for-each-group
       select="//gmd:distributionInfo/*/gmd:transferOptions/*/gmd:onLine/gmd:CI_OnlineResource"
       group-by="gmd:linkage/gmd:URL">
-      <dcat:Distribution rdf:about="{gmd:linkage/gmd:URL}">
+      <dcat:Distribution>
         <!--
           "points to the location of a distribution. This can be a direct download link, a link
           to an HTML page containing a link to the actual data, Feed, Web Service etc.
