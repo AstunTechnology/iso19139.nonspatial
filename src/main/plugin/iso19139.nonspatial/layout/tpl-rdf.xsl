@@ -100,7 +100,7 @@
 
 
   <!-- Add references for HTML and XML metadata record link -->
-  <xsl:template name="add-reference">
+  <xsl:template name="ns-add-reference">
     <xsl:param name="uuid"/>
 
     <dct:references>
