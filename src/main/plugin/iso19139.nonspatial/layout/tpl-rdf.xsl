@@ -154,58 +154,7 @@
 
       xpath: //gmd:distributionInfo/*/gmd:transferOptions/*/gmd:onLine/gmd:CI_OnlineResource
     -->
-    <xsl:for-each-group
-      select="//gmd:distributionInfo/*/gmd:transferOptions/*/gmd:onLine/gmd:CI_OnlineResource"
-      group-by="gmd:linkage/gmd:URL">
-      <dcat:Distribution rdf:about="{gmd:linkage/gmd:URL}">
-        <!--
-          "points to the location of a distribution. This can be a direct download link, a link
-          to an HTML page containing a link to the actual data, Feed, Web Service etc.
-          the semantic is determined by its domain (Distribution, Feed, WebService, Download)."
-        -->
-        <dcat:accessURL>
-          <xsl:value-of select="gmd:linkage/gmd:URL"/>
-        </dcat:accessURL>
-        <!-- xpath: gmd:linkage/gmd:URL -->
-
-        <xsl:if test="gmd:name/gco:CharacterString!=''">
-          <dct:title>
-            <xsl:value-of select=" gmd:name/gco:CharacterString"/>
-          </dct:title>
-        </xsl:if>
-        <!-- xpath: gmd:name/gco:CharacterString -->
-
-        <!-- "The size of a distribution.":N/A
-          <dcat:size></dcat:size>
-        -->
-
-        <xsl:if test="gmd:protocol/gco:CharacterString!=''">
-          <dct:format>
-            <!--
-              "the file format of the distribution."
-
-              "MIME type is used for values. A list of MIME types URLs can be found at IANA.
-              However ESRI Shape files have no specific MIME type (A Shape distribution is actually
-              a collection of files), currently this is still an open question?"
-
-              In our case, Shapefile will be zipped !
-
-              Mapping between protocol list and mime/type when needed
-            -->
-            <dct:IMT>
-              <rdf:value>
-                <xsl:value-of select="gmd:protocol/gco:CharacterString"/>
-              </rdf:value>
-              <rdfs:label>
-                <xsl:value-of select="gmd:protocol/gco:CharacterString"/>
-              </rdfs:label>
-            </dct:IMT>
-          </dct:format>
-        </xsl:if>
-        <!-- xpath: gmd:protocol/gco:CharacterString -->
-
-      </dcat:Distribution>
-    </xsl:for-each-group>
+    
 
 
     <xsl:for-each-group
