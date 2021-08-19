@@ -657,7 +657,7 @@
         <xsl:for-each
           select="$restrictions/gmd:MD_LegalConstraints/gmd:accessConstraints/gmd:otherConstraints/gmx:Anchor">
           <dct:rights> <xsl:value-of select="."/></dct:rights>
-          <dct:license rdf:resource="{$restrictions/gmd:MD_LegalConstraints/gmd:accessConstraints/gmd:otherConstraints/gmx:Anchor@xlink:href}"/>
+          <dct:license rdf:resource="{$restrictions/gmd:MD_LegalConstraints/gmd:accessConstraints/gmd:otherConstraints/gmx:Anchor/@xlink:href}"/>
         </xsl:for-each>
       </dcat:Distribution>
       </dcat:distribution>
