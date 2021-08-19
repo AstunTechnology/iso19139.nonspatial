@@ -156,6 +156,7 @@
     <xsl:for-each-group
       select="//gmd:distributionInfo/*/gmd:transferOptions/*/gmd:onLine/gmd:CI_OnlineResource"
       group-by="gmd:linkage/gmd:URL">
+      <dcat:distribution>
       <dcat:Distribution>
         <!--
           "points to the location of a distribution. This can be a direct download link, a link
@@ -204,6 +205,7 @@
         <!-- xpath: gmd:protocol/gco:CharacterString -->
 
       </dcat:Distribution>
+    </dcat:distribution>
     </xsl:for-each-group>
 
 
@@ -243,18 +245,17 @@
           </foaf:name>
         </xsl:if>
         <!-- xpath: gmd:individualName/gco:CharacterString -->
-        <xsl:if
+       <!--  <xsl:if
           test="gmd:contactInfo/gmd:CI_Contact/gmd:phone/gmd:CI_Telephone/gmd:voice/gco:CharacterString">
           <foaf:phone>
             <xsl:value-of
               select="gmd:contactInfo/gmd:CI_Contact/gmd:phone/gmd:CI_Telephone/gmd:voice/gco:CharacterString"/>
           </foaf:phone>
-        </xsl:if>
+        </xsl:if> -->
         <!-- xpath: gmd:contactInfo/gmd:CI_Contact/gmd:phone/gmd:CI_Telephone/gmd:voice/gco:CharacterString -->
         <xsl:if
           test="gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress/gco:CharacterString">
-          <foaf:mbox
-            rdf:resource="mailto:{gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress/gco:CharacterString}"/>
+          <foaf:mbox><xsl:value-of select="gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress/gco:CharacterString"/></foaf:mbox>
         </xsl:if>
         <!-- xpath: gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress/gco:CharacterString -->
       </foaf:Agent>
@@ -598,6 +599,7 @@
     <xsl:for-each-group
       select="../../gmd:distributionInfo/*/gmd:transferOptions/*/gmd:onLine/gmd:CI_OnlineResource"
       group-by="gmd:linkage/gmd:URL">
+      <dcat:distribution>
       <dcat:Distribution>
         <!--
           "points to the location of a distribution. This can be a direct download link, a link
@@ -659,6 +661,7 @@
         </dct:rights>
         </xsl:for-each>
       </dcat:Distribution>
+      </dcat:distribution>
     </xsl:for-each-group>
 
   </xsl:template>
