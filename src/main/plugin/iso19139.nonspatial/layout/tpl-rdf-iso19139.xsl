@@ -35,6 +35,8 @@
                 xmlns:gmd="http://www.isotc211.org/2005/gmd"
                 xmlns:srv="http://www.isotc211.org/2005/srv"
                 xmlns:gml="http://www.opengis.net/gml/3.2"
+                xmlns:gmx="http://www.isotc211.org/2005/gmx"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
                 xmlns:gml320="http://www.opengis.net/gml"
                 xmlns:ogc="http://www.opengis.net/rdf#"
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
@@ -653,11 +655,9 @@
           </dct:license>
         </xsl:for-each> -->
         <xsl:for-each
-          select="$restrictions/gmd:MD_LegalConstraints/gmd:accessConstraints/gmd:otherConstraints/gco:CharacterString">
-          <dct:rights><xsl:value-of select="."/></dct:rights>
-          <dct:license>
-            <xsl:value-of select="."/>
-          </dct:license>
+          select="$restrictions/gmd:MD_LegalConstraints/gmd:accessConstraints/gmd:otherConstraints/gmx:Anchor">
+          <dct:rights> <xsl:value-of select="."/></dct:rights>
+          <dct:license rdf:resource="{$restrictions/gmd:MD_LegalConstraints/gmd:accessConstraints/gmd:otherConstraints/gmx:Anchor@xlink:href}"/>
         </xsl:for-each>
       </dcat:Distribution>
       </dcat:distribution>
