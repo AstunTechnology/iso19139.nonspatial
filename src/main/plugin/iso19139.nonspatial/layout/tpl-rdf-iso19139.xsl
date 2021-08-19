@@ -316,7 +316,7 @@
     </dct:description>
     <!-- xpath: gmd:identificationInfo/*/gmd:abstract/gco:CharacterString -->
 
-    <xsl:for-each select="gmd:resourceConstraints/gmd:MD_Constraints/gmd:useLimitation"> 
+    <xsl:for-each select="gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints"> 
       <xsl:variable name="licensestring" select="gco:CharacterString"/>  
       <xsl:message>======= License: <xsl:value-of select="$licensestring"/> ==========</xsl:message> 
         <!-- <dct:rights>  -->
@@ -653,12 +653,11 @@
           </dct:license>
         </xsl:for-each> -->
         <xsl:for-each
-          select="$restrictions/gmd:MD_Constraints/gmd:accessConstraints/gmd:otherConstraints/gco:CharacterString">
-          <dct:rights>
+          select="$restrictions/gmd:MD_LegalConstraints/gmd:accessConstraints/gmd:otherConstraints/gco:CharacterString">
+          <dct:rights><xsl:value-of select="."/></dct:rights>
           <dct:license>
             <xsl:value-of select="."/>
           </dct:license>
-        </dct:rights>
         </xsl:for-each>
       </dcat:Distribution>
       </dcat:distribution>
