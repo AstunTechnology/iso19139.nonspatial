@@ -613,11 +613,11 @@
         </dcat:accessURL>
         <!-- xpath: gmd:linkage/gmd:URL -->
 
-        <!-- <xsl:if test="gmd:name/gco:CharacterString!=''">
+        <xsl:if test="gmd:name/gco:CharacterString!=''">
           <dct:title>
             <xsl:value-of select=" gmd:name/gco:CharacterString"/>
           </dct:title>
-        </xsl:if> -->
+        </xsl:if>
         <!-- xpath: gmd:name/gco:CharacterString -->
 
         <!-- "The size of a distribution.":N/A
@@ -625,35 +625,13 @@
         -->
 
         <xsl:if test="gmd:protocol/gco:CharacterString!=''">
-          <dct:format>
-            <!--
-              "the file format of the distribution."
-
-              "MIME type is used for values. A list of MIME types URLs can be found at IANA.
-              However ESRI Shape files have no specific MIME type (A Shape distribution is actually
-              a collection of files), currently this is still an open question?"
-
-              In our case, Shapefile will be zipped !
-
-              Mapping between protocol list and mime/type when needed fdfd
-            -->
-            <dct:IMT>
-              <rdf:value>
+          <!-- DGU maps "format" for a distribution to dcat:mediaType -->
+          <dcat:mediaType>
                 <xsl:value-of select="gmd:protocol/gco:CharacterString"/>
-              </rdf:value>
- <!--              <rdfs:label>
-                <xsl:value-of select="gmd:protocol/gco:CharacterString"/>
-              </rdfs:label> -->
-            </dct:IMT>
-          </dct:format>
+          </dcat:mediaType>
         </xsl:if>
         <!-- xpath: gmd:protocol/gco:CharacterString -->
 
-        <!-- <xsl:for-each select="$restrictions/gmd:MD_LegalConstraints/*/gmd:MD_RestrictionCode">
-          <dct:license>
-            <xsl:value-of select="@codeListValue"/>
-          </dct:license>
-        </xsl:for-each> -->
         <xsl:for-each
           select="$restrictions/gmd:MD_LegalConstraints/gmd:otherConstraints/gmx:Anchor">
           <xsl:message>=== rights === <xsl:value-of select="."/></xsl:message>
