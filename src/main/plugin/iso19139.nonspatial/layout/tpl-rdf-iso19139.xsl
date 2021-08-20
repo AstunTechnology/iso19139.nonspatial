@@ -317,19 +317,19 @@
     </xsl:for-each>
     </dct:description>
     <!-- xpath: gmd:identificationInfo/*/gmd:abstract/gco:CharacterString -->
+    <xsl:variable name="restrictions" select="gmd:resourceConstraints" />
 
-    <xsl:for-each select="gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints"> 
-      <xsl:variable name="licensestring" select="gco:CharacterString"/>  
-      <xsl:message>======= License: <xsl:value-of select="$licensestring"/> ==========</xsl:message> 
-        <!-- <dct:rights>  -->
-        <dct:license>
-          <xsl:value-of select="$licensestring"/>
+    <xsl:for-each
+          select="gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints/gmx:Anchor">
+          <xsl:message> === dataset license text === <xsl:value-of select="."/></xsl:message>
+          <xsl:message> === dataset license url === <xsl:value-of select="./@xlink:href"/></xsl:message>
+        <dct:license rdf:resource="{./@xlink:href}">
+          <xsl:value-of select="."/>
         </dct:license>
-        <!-- </dct:rights> -->
     </xsl:for-each>
 
 
-    <!-- "A keyword or tag describing the dataset."
+    <!-- "A keyword or tag describing the dataset."<xsl:variable name="restrictions" select="gmd:resourceConstraints" />
       Create dcat:keyword if no thesaurus name information available.
     -->
     <xsl:for-each
@@ -655,9 +655,11 @@
           </dct:license>
         </xsl:for-each> -->
         <xsl:for-each
-          select="$restrictions/gmd:MD_LegalConstraints/gmd:accessConstraints/gmd:otherConstraints/gmx:Anchor">
+          select="$restrictions/gmd:MD_LegalConstraints/gmd:otherConstraints/gmx:Anchor">
+          <xsl:message>=== rights === <xsl:value-of select="."/></xsl:message>
           <dct:rights> <xsl:value-of select="."/></dct:rights>
-          <dct:license rdf:resource="{$restrictions/gmd:MD_LegalConstraints/gmd:accessConstraints/gmd:otherConstraints/gmx:Anchor/@xlink:href}"/>
+          <xsl:message>=== license === <xsl:value-of select="$restrictions/gmd:MD_LegalConstraints/gmd:otherConstraints/gmx:Anchor/@xlink:href"/></xsl:message>
+          <dct:license rdf:resource="{$restrictions/gmd:MD_LegalConstraints/gmd:otherConstraints/gmx:Anchor/@xlink:href}"></dct:license>
         </xsl:for-each>
       </dcat:Distribution>
       </dcat:distribution>
