@@ -29,3 +29,12 @@ The best approach is to add the plugin as a submodule. Use https://github.com/ge
 See https://geonetwork-opensource.org/manuals/trunk/en/install-guide/installing-from-source-code.html. 
 
 Once the application is built `web/target/geonetwork.war` will contain GeoNetwork with the non-spatial schema plugin included.
+
+#### Using this for the catalog rdf endpoint
+
+To ensure that the output of the API endpoint `/{portal}/api/0.1/records` matches that of the single-record download, and harvests correctly into ckan endpoints such as data.gov.uk, you will need to overwrite some files in the core GeoNetwork code and recompile from source.
+
+ * Take the files in the `services` and `web` directories and overwrite those in your download of the source code
+ * Build the application using the instructions in the link above
+
+
