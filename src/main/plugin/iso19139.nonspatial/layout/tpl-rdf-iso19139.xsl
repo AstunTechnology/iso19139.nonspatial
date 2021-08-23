@@ -626,6 +626,40 @@
 
         <xsl:if test="gmd:protocol/gco:CharacterString!=''">
           <!-- DGU maps "format" for a distribution to dcat:mediaType -->
+          <!-- DGU has a supported set of formats too:
+           # Display name, extensions (lower case), mime-types
+          'HTML', 'html' OR 'htm' OR 'asp' OR 'php', 'text/html'
+          'JPEG', 'jpg' OR'jpeg', 'image/jpg'
+          'TIFF', 'tifflzw' OR'tiff', 'image/tiff'
+          'Database', , 
+          'API', , 
+          'TXT', 'txt', 'text/plain'
+          'PDF', 'pdf', 'application/pdf'
+          'RTF', 'rtf', 'application/rtf'
+          'Zip', 'zip', 'application/x-zip' OR 'application/x-compressed' OR 'application/x-zip-compressed' OR 'application/zip' OR 'multipart/x-zip' OR 'application/x-gzip'
+          'Torrent', 'torrent', 'application/x-bittorrent'
+          'DOC', 'doc' OR 'docx' OR 'mcw', 'application/msword' OR 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' OR 'application/vnd.ms-word.document.macroEnabled.12'
+          'ODT', 'odt', 'application/vnd.oasis.opendocument.text' OR 'application/x-vnd.oasis.opendocument.text'
+          'PPT', 'ppt' OR 'pptx' OR 'ppz', 'application/mspowerpoint' OR 'application/vnd.ms-powerpoint.presentation.macroEnabled.12' OR 'application/vnd.ms-powerpoint'
+          'ODP', 'odp', 'application/vnd.oasis.opendocument.presentation' OR 'application/x-vnd.oasis.opendocument.presentation'
+          'XLS', 'xls' OR 'xlsx' OR 'xlb', 'application/excel' OR 'application/x-excel' OR 'application/x-msexcel' OR 'application/vnd.ms-excel' OR 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' OR 'application/vnd.ms-excel.sheet.binary.macroenabled.12' OR 'application/vnd.ms-excel.sheet.macroenabled.12' OR 'application/vnd.msexcel'
+          'SHP', 'shp', 
+          'CSV', 'csv', 'text/csv' OR'text/comma-separated-values'
+          'PSV', 'psv', 'text/psv' OR'text/pipe-separated-values'
+          'JSON', 'json', 'application/json' OR 'text/x-json'
+          'XML', 'xml', 'text/xml' OR'application/xml'
+          'RSS', 'rss', 'text/rss+xml'
+          'ODS', 'ods', 'application/vnd.oasis.opendocument.spreadsheet'
+          'WMS', 'wms', 'application/vnd.ogc.wms_xml'
+          'KML', 'kml', 'application/vnd.google-earth.kml+xml'
+          'NetCDF', 'cdf' OR 'netcdf', 'application/x-netcdf'
+          'IATI', 'iati', 'application/x-iati+xml'
+          'iCalendar', 'ics' OR 'ical', 'text/calendar'
+          'RDF', 'rdf' OR'ttl' OR'nt', 'application/rdf+xml' OR'text/turtle'
+          'RDFa', , 
+          'SPARQL', , 'application/sparql-results+xml' OR 'application/sparql-query'
+          'SPARQL web form', , 
+           -->
           <dcat:mediaType>
                 <xsl:value-of select="gmd:protocol/gco:CharacterString"/>
           </dcat:mediaType>
