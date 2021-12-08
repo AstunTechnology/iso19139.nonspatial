@@ -321,12 +321,11 @@
 
     <xsl:for-each
           select="gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints/gmx:Anchor">
-          <xsl:message> === dataset license text === <xsl:value-of select="."/></xsl:message>
-          <xsl:message> === dataset license url === <xsl:value-of select="./@xlink:href"/></xsl:message>
-        <dct:license rdf:resource="{./@xlink:href}">
-          <xsl:value-of select="."/>
-        </dct:license>
-    </xsl:for-each>
+          <xsl:message>=== rights === <xsl:value-of select="."/></xsl:message>
+          <dct:rights> <xsl:value-of select="."/></dct:rights>
+          <xsl:message>=== license === <xsl:value-of select="$restrictions/gmd:MD_LegalConstraints/gmd:otherConstraints/gmx:Anchor/@xlink:href"/></xsl:message>
+          <dct:license rdf:resource="{$restrictions/gmd:MD_LegalConstraints/gmd:otherConstraints/gmx:Anchor/@xlink:href}"></dct:license>
+        </xsl:for-each>
 
 
     <!-- "A keyword or tag describing the dataset."<xsl:variable name="restrictions" select="gmd:resourceConstraints" />
