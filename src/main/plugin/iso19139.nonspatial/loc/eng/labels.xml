@@ -1072,7 +1072,7 @@
   </element>
   <element name="gmd:dataType" id="313.0">
     <label>Data type</label>
-    <description>Code which identifies the kind of valueprovidedeprovided in the extended
+    <description>Code which identifies the kind of value provided in the extended
       element
     </description>
     <condition>mandatory</condition>
@@ -1099,13 +1099,11 @@
     <condition>mandatory</condition>
     <label>Date</label>
     <description>Reference date for the cited resource</description>
-    <_condition>M</_condition>
   </element>
   <element name="gmd:date" id="394.0" context="gmd:CI_Date">
     <condition>mandatory</condition>
     <label>Date</label>
     <description>Reference date for the cited resource</description>
-    <_condition>M</_condition>
   </element>
   <element name="gmd:dateOfNextUpdate" id="144.0">
     <label>Date of next update</label>

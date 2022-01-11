@@ -38,7 +38,7 @@
   <xs:element name="CI_ResponsibleParty" type="gmd:CI_ResponsibleParty_Type"/>
   <!-- ........................................................................ -->
   <xs:complexType name="CI_ResponsibleParty_PropertyType">
-    <xs:sequence minOccurs="0">
+    <xs:sequence minOccurs="1">
       <xs:element ref="gmd:CI_ResponsibleParty"/>
     </xs:sequence>
     <xs:attributeGroup ref="gco:ObjectReference"/>
@@ -210,8 +210,8 @@
     <xs:complexContent>
       <xs:extension base="gco:AbstractObject_Type">
         <xs:sequence>
-          <xs:element name="date" type="gco:Date_PropertyType"/>
-          <xs:element name="dateType" type="gmd:CI_DateTypeCode_PropertyType"/>
+          <xs:element name="date" type="gco:Date_PropertyType" minOccurs="2"/>
+          <xs:element name="dateType" type="gmd:CI_DateTypeCode_PropertyType" minOccurs="2"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
