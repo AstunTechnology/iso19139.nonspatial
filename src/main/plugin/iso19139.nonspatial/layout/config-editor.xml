@@ -444,7 +444,7 @@
         <directive data-gn-need-help="user-guide/describing-information/creating-metadata.html"/>
       </sidePanel>
 
-      <tab id="default-nonspatial" default="true" mode="flat">
+      <tab id="default" default="true" mode="flat">
         <section name="identificationInfo">
           <field
             xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:title"/>

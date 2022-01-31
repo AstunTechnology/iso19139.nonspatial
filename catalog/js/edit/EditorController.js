@@ -213,7 +213,7 @@
                   // Example : open ISO19139 record having
                   // standardName containing medsea in advanced mode
                   'iso19139': function (md) {
-                   if (md.standardName && md.standardName.match(/non-spatial/i)) {
+                   if (md.standardName && md.standardName.match(/ISO19139 non-spatial/i)) {
                      return 'default-nonspatial';
                    }
                    return defaultTab;
