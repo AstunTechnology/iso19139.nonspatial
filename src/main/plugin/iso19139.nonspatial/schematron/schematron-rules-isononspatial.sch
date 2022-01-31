@@ -60,6 +60,12 @@ USA.
 
 -->
 
+<!-- STRIPPED DOWN NONSPATIAL VERSION, REMOVES GEOGRAPHIC EXTENT CONSTRAINT 
+
+JANUARY 2022
+
+-->
+
 	<sch:title xmlns="http://www.w3.org/2001/XMLSchema">ISO rules</sch:title>
   <sch:ns prefix="gml" uri="http://www.opengis.net/gml/3.2"/>
   <sch:ns prefix="gml320" uri="http://www.opengis.net/gml"/>
@@ -288,40 +294,8 @@ USA.
 				><sch:value-of select="$total"/> <sch:value-of select="$loc/strings/report.M19"/></sch:report>
 		</sch:rule>
 	</sch:pattern>
-	<!-- anzlic/trunk/gml/3.2.0/gmd/extent.xsd-->
-	<!-- TEST 20 FXCHECK -->
-	<sch:pattern>
-		<sch:title>$loc/strings/M20</sch:title>
-		<sch:rule context="//gmd:EX_Extent">
-			<sch:let name="count" value="count(gmd:description[@gco:nilReason!='missing' or not(@gco:nilReason)])>0 
-				or count(gmd:geographicElement)>0 
-				or count(gmd:temporalElement)>0 
-				or count(gmd:verticalElement)>0"/>
-			<sch:assert
-				test="$count"
-				>$loc/strings/alert.M20</sch:assert>
-			<sch:report
-				test="$count"
-				>$loc/strings/report.M20</sch:report>
-		</sch:rule>
-	</sch:pattern>
-	<!-- TEST  1 -->
-	<sch:pattern>
-		<sch:title>$loc/strings/M21</sch:title>
-		<sch:rule context="//gmd:MD_DataIdentification|//*[contains(@gco:isoType, 'MD_DataIdentification')]">
-			<sch:let name="extent" value="(not(../../gmd:hierarchyLevel) 
-				or ../../gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue='dataset' 
-				or ../../gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue='') 
-				and (count(gmd:extent/*/gmd:geographicElement/gmd:EX_GeographicBoundingBox) 
-				+ count (gmd:extent/*/gmd:geographicElement/gmd:EX_GeographicDescription))=0"/>
-			<sch:assert
-				test="$extent = false()"
-				>$loc/strings/alert.M21</sch:assert>
-			<sch:report
-				test="$extent = false()"
-				>$loc/strings/report.M21</sch:report>
-		</sch:rule>
-	</sch:pattern>
+	
+	
 	<!-- TEST  2 -->
 	<sch:pattern>
 		<sch:title>$loc/strings/M22</sch:title>

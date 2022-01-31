@@ -439,7 +439,7 @@
     <view name="nonspatial" hideTimeInCalendar="true" default="true" displayIfRecord="contains(gmd:MD_Metadata/gmd:hierarchyLevelName/gco:CharacterString,'NonGeographicDataset')">
       <sidePanel>
         <directive data-gn-onlinesrc-list=""/>
-        <directive data-gn-validation-report=""/>
+        <directive data-gn-validation-report="" data-initial-show-errors="true" data-initial-show-successes="false" data-initial-section-states="open"/>
         <directive data-gn-suggestion-list=""/>
         <directive data-gn-need-help="user-guide/describing-information/creating-metadata.html"/>
       </sidePanel>

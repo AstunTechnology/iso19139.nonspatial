@@ -105,6 +105,7 @@
 
     <xsl:template match="gmd:MD_LegalConstraints" priority="10">
         <xsl:message>=== Updating Legal Constraints</xsl:message>
+        <gmd:MD_LegalConstraints>
           <gmd:useConstraints>
             <gmd:MD_RestrictionCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_RestrictionCode" codeListValue="otherRestrictions" />
           </gmd:useConstraints>
@@ -114,6 +115,7 @@
           <gmd:otherConstraints>
             <gco:CharacterString>We simply ask that you acknowledge the copyright and the source of the data by including the following attribution statement: Contains OS data © Crown copyright and database right 2020 Contains Royal Mail data © Royal Mail copyright and Database right 2020 Contains National Statistics data © Crown copyright and database right 2020</gco:CharacterString>
           </gmd:otherConstraints>
+      </gmd:MD_LegalConstraints>
       </xsl:template>
     
     
@@ -171,10 +173,10 @@
     <!--  Remove geonet:* elements.  -->
     <xsl:template match="geonet:*" priority="10"/>
     
-    <!--<xsl:template match="@*|node()">
+    <xsl:template match="@*|node()">
         <xsl:copy  copy-namespaces="no">
             <xsl:apply-templates select="@*|node()"/>
         </xsl:copy>
-    </xsl:template>-->
+    </xsl:template>
     
 </xsl:stylesheet>

@@ -1,4 +1,4 @@
-gith<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0"
     xmlns:gml="http://www.opengis.net/gml/3.2"
@@ -59,9 +59,27 @@ gith<?xml version="1.0" encoding="UTF-8"?>
     <!--  Change hierarchy level and level name  -->
     <!-- Only if it doesn't already equal NonGeographicDataset -->
     <xsl:template match="//gmd:hierarchyLevel"  priority="10">
-        <gmd:hierarchyLevel>
-            <gmd:MD_ScopeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_ScopeCode" codeListValue="nonGeographicDataset" codeSpace="ISOTC211/19115"/>
-        </gmd:hierarchyLevel>
+        <xsl:copy>
+            <xsl:choose>
+                <xsl:when test="not(gmd:hierarchyLevel/@codeListValue='nonGeographicDataset)">
+                    <xsl:message>=== Adding missing hierarchyLevel</xsl:message>
+                    <gmd:hierarchyLevel>
+                        <gmd:MD_ScopeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_ScopeCode" codeListValue="nonGeographicDataset" codeSpace="ISOTC211/19115"/>
+                    </gmd:hierarchyLevel>
+                </xsl:when>
+                <xsl:when test="not(following::gmd:hierarchyLevelName">
+                    <xsl:message>=== Adding missing hierarchyLevelName</xsl:message>
+                    <gmd:hierarchyLevelName xmlns:gml="http://www.opengis.net/gml/3.2">
+                    <gco:CharacterString>NonGeographicDataset</gco:CharacterString>
+                    </gmd:hierarchyLevelName>
+                </xsl:when>
+                <xsl:otherwise>
+                   <xsl:message>=== Copying existing hierarchylevel</xsl:message>
+                        <xsl:apply-templates select="gmd:hierarchyLevel" />
+                        <xsl:apply-templates select="gmd:hierarchyLevelName" />
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:copy>
     </xsl:template>
     
     <xsl:template match="//gmd:hierarchyLevelName"  priority="10">
@@ -89,6 +107,21 @@ gith<?xml version="1.0" encoding="UTF-8"?>
             </gmd:DQ_Scope>
         </gmd:scope>
     </xsl:template>
+
+    <!-- make sure the OGL license is included and referenced correctly -->
+
+    <xsl:template match="gmd:MD_LegalConstraints" priority="10">
+        <xsl:message>=== Updating Legal Constraints</xsl:message>
+          <gmd:useConstraints>
+            <gmd:MD_RestrictionCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_RestrictionCode" codeListValue="otherRestrictions" />
+          </gmd:useConstraints>
+          <gmd:otherConstraints>
+            <gmx:Anchor xlink:href="http://reference.data.gov.uk/id/open-government-licence">Open Government Licence</gmx:Anchor>
+          </gmd:otherConstraints>
+          <gmd:otherConstraints>
+            <gco:CharacterString>We simply ask that you acknowledge the copyright and the source of the data by including the following attribution statement: Contains OS data © Crown copyright and database right 2020 Contains Royal Mail data © Royal Mail copyright and Database right 2020 Contains National Statistics data © Crown copyright and database right 2020</gco:CharacterString>
+          </gmd:otherConstraints>
+      </xsl:template>
     
     
     <!-- ================================================================= -->
