@@ -680,14 +680,16 @@
 
 
   <!--
-    Get resource (dataset or service) identifier if set and return metadata UUID if not.
+    Use UUID as resource identifier as it's the only one that's unique
   -->
   <xsl:function name="iso19139:getResourceCode" as="xs:string">
     <xsl:param name="metadata" as="node()"/>
 
-    <xsl:value-of select="if ($metadata/gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code/gco:CharacterString!='')
+    <!-- <xsl:value-of select="if ($metadata/gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code/gco:CharacterString!='')
       then $metadata/gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code/gco:CharacterString
-      else $metadata/gmd:fileIdentifier/gco:CharacterString"/>
+      else $metadata/gmd:fileIdentifier/gco:CharacterString"/> -->
+
+    <xsl:value-of select="$metadata/gmd:fileIdentifier/gco:CharacterString"/>
   </xsl:function>
 
 
