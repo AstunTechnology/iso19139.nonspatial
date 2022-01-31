@@ -66,7 +66,7 @@ JANUARY 2022
 
 -->
 
-	<sch:title xmlns="http://www.w3.org/2001/XMLSchema">ISO rules</sch:title>
+	<sch:title xmlns="http://www.w3.org/2001/XMLSchema">ISO non-spatial rules</sch:title>
   <sch:ns prefix="gml" uri="http://www.opengis.net/gml/3.2"/>
   <sch:ns prefix="gml320" uri="http://www.opengis.net/gml"/>
 	<sch:ns prefix="gmd" uri="http://www.isotc211.org/2005/gmd"/>
@@ -538,5 +538,31 @@ JANUARY 2022
             </sch:report>
         </sch:rule>
     </sch:pattern>
+
+    <!-- resource description and name -->
+
+    <sch:pattern>
+        <sch:title>$loc/strings/EAMP300</sch:title>
+    </sch:pattern>
+
+    <sch:pattern>
+        <sch:title>EAMP-mi3-GeneralContact</sch:title>
+        <sch:rule context="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:pointOfContact/gmd:CI_ResponsibleParty">
+            <sch:assert test="count(./gmd:individualName)=1">$loc/strings/EAMP300.alert.name</sch:assert>
+            <sch:assert test="count(./gmd:organisationName)=1">$loc/strings/EAMP300.alert.org</sch:assert>
+            <sch:assert test="count(./gmd:positionName)=1">$loc/strings/EAMP300.alert.position</sch:assert>
+            <sch:assert test="count(./gmd:role)=1">$loc/strings/EAMP300.alert.role</sch:assert>
+     </sch:rule>
+    </sch:pattern>
+
+    <sch:pattern>
+        <sch:title>EAMP-mi4-Custodian</sch:title>
+        <sch:rule context="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification">
+            <sch:assert test="count(//gmd:pointOfContact/gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode[@codeListValue='custodian'])=2">$loc/strings/EAMP300.alert.custodian</sch:assert>
+            <sch:assert test="count(//gmd:pointOfContact/gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode[@codeListValue='owner'])=1">$loc/strings/EAMP300.alert.owner</sch:assert>
+            <sch:assert test="count(//gmd:pointOfContact/gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode[@codeListValue='pointOfContact'])=1">$loc/strings/EAMP300.alert.poc</sch:assert>
+         </sch:rule>
+     </sch:pattern>
+
 
 </sch:schema>
