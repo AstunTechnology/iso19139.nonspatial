@@ -542,27 +542,20 @@ JANUARY 2022
     <!-- resource description and name -->
 
     <sch:pattern>
-        <sch:title>$loc/strings/EAMP300</sch:title>
-    </sch:pattern>
-
-    <sch:pattern>
-        <sch:title>EAMP-mi3-GeneralContact</sch:title>
-        <sch:rule context="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:pointOfContact/gmd:CI_ResponsibleParty">
-            <sch:assert test="count(./gmd:individualName)=1">$loc/strings/EAMP300.alert.name</sch:assert>
-            <sch:assert test="count(./gmd:organisationName)=1">$loc/strings/EAMP300.alert.org</sch:assert>
-            <sch:assert test="count(./gmd:positionName)=1">$loc/strings/EAMP300.alert.position</sch:assert>
-            <sch:assert test="count(./gmd:role)=1">$loc/strings/EAMP300.alert.role</sch:assert>
+        <sch:title>$loc/strings/ISONS001</sch:title>
+        <sch:rule context="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine/gmd:CI_OnlineResource">
+            <sch:assert test="count(./gmd:description)=1">$loc/strings/ISONS001.alert.desc</sch:assert>
+            <sch:report test="count(./gmd:description)=1">$loc/strings/ISONS001.required.desc</sch:report>
      </sch:rule>
     </sch:pattern>
 
-    <sch:pattern>
-        <sch:title>EAMP-mi4-Custodian</sch:title>
-        <sch:rule context="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification">
-            <sch:assert test="count(//gmd:pointOfContact/gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode[@codeListValue='custodian'])=2">$loc/strings/EAMP300.alert.custodian</sch:assert>
-            <sch:assert test="count(//gmd:pointOfContact/gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode[@codeListValue='owner'])=1">$loc/strings/EAMP300.alert.owner</sch:assert>
-            <sch:assert test="count(//gmd:pointOfContact/gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode[@codeListValue='pointOfContact'])=1">$loc/strings/EAMP300.alert.poc</sch:assert>
-         </sch:rule>
-     </sch:pattern>
+     <sch:pattern>
+        <sch:title>$loc/strings/ISONS002</sch:title>
+        <sch:rule context="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine/gmd:CI_OnlineResource">
+            <sch:assert test="count(./gmd:name)=1">$loc/strings/ISONS002.alert.name</sch:assert>
+            <sch:report test="count(./gmd:name)=1">$loc/strings/ISONS002.required.name</sch:report>
+     </sch:rule>
+    </sch:pattern>
 
 
 </sch:schema>
