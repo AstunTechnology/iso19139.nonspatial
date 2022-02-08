@@ -7,7 +7,7 @@
         "sources": {
           "filestore": true
         },
-        "icon": "fa gn-icon-onlainesrc",aaa
+        "icon": "fa gn-icon-onlainesrc",
         "process": "onlinesrc-add",
         "fields": {
           "protocol": {
