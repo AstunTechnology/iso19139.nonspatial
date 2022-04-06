@@ -21,7 +21,7 @@
     
     <!-- ================================================================= -->
     
-    
+   
     
     
     <xsl:template match="*" priority="1">
@@ -34,6 +34,8 @@
             <xsl:namespace name="xlink" select="'http://www.w3.org/1999/xlink'"/>
             <xsl:namespace name="gmd" select="'http://www.isotc211.org/2005/gmd'"/>
             <xsl:namespace name="xs" select="'http://www.w3.org/2001/XMLSchema'"/>
+            <xsl:namespace name="eamp" select="'http://environment.data.gov.uk/eamp'"/>
+            <xsl:namespace name="geonet" select="'http://www.fao.org/geonetwork'"/>
             <xsl:apply-templates select="@*|node()"/>
         </xsl:element>
     </xsl:template>
@@ -57,36 +59,30 @@
     </xsl:template>
     
     <!--  Change hierarchy level and level name  -->
-    <!-- Only if it doesn't already equal NonGeographicDataset -->
-    <xsl:template match="//gmd:hierarchyLevel"  priority="10">
-        <xsl:copy>
-            <xsl:choose>
-                <xsl:when test="not(gmd:hierarchyLevel/@codeListValue='nonGeographicDataset)">
-                    <xsl:message>=== Adding missing hierarchyLevel</xsl:message>
-                    <gmd:hierarchyLevel>
-                        <gmd:MD_ScopeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_ScopeCode" codeListValue="nonGeographicDataset" codeSpace="ISOTC211/19115"/>
-                    </gmd:hierarchyLevel>
-                </xsl:when>
-                <xsl:when test="not(following::gmd:hierarchyLevelName">
-                    <xsl:message>=== Adding missing hierarchyLevelName</xsl:message>
-                    <gmd:hierarchyLevelName xmlns:gml="http://www.opengis.net/gml/3.2">
-                    <gco:CharacterString>NonGeographicDataset</gco:CharacterString>
-                    </gmd:hierarchyLevelName>
-                </xsl:when>
-                <xsl:otherwise>
-                   <xsl:message>=== Copying existing hierarchylevel</xsl:message>
-                        <xsl:apply-templates select="gmd:hierarchyLevel" />
-                        <xsl:apply-templates select="gmd:hierarchyLevelName" />
-                </xsl:otherwise>
-            </xsl:choose>
-        </xsl:copy>
+     <xsl:template match="//gmd:hierarchyLevel" priority="10">
+          <xsl:message>=== Updating hierarchyLevel</xsl:message>
+               <gmd:hierarchyLevel>
+                   <gmd:MD_ScopeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_ScopeCode" codeListValue="nonGeographicDataset" codeSpace="ISOTC211/19115"/>
+                </gmd:hierarchyLevel>
+         <xsl:choose>
+             <xsl:when test="not(following::gmd:hierarchyLevelName)">
+                 <xsl:message>=== Adding missing hierarchyLevelName</xsl:message>
+                 <gmd:hierarchyLevelName>
+                     <gco:CharacterString>NonGeographicDataset</gco:CharacterString>
+                 </gmd:hierarchyLevelName>
+             </xsl:when>
+             <xsl:otherwise>
+                 <xsl:apply-templates select="gmd:hierarchyLevelName" />
+             </xsl:otherwise>
+         </xsl:choose>
     </xsl:template>
-    
-    <xsl:template match="//gmd:hierarchyLevelName"  priority="10">
+
+<!--    <xsl:template match="//gmd:hierarchyLevel[not(following::gmd:hierarchyLevelName)]" priority="10">
+        <xsl:message>=== Adding missing hierarchyLevelName</xsl:message>
         <gmd:hierarchyLevelName>
             <gco:CharacterString>NonGeographicDataset</gco:CharacterString>
         </gmd:hierarchyLevelName>
-    </xsl:template>
+    </xsl:template>-->
     
     <xsl:template match="//gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:scope" priority="10">
         <xsl:message>=== Updating Data Quality Scope Code</xsl:message>
@@ -112,6 +108,7 @@
 
     <xsl:template match="gmd:MD_LegalConstraints" priority="10">
         <xsl:message>=== Updating Legal Constraints</xsl:message>
+        <gmd:MD_LegalConstraints>
           <gmd:useConstraints>
             <gmd:MD_RestrictionCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_RestrictionCode" codeListValue="otherRestrictions" />
           </gmd:useConstraints>
@@ -121,6 +118,7 @@
           <gmd:otherConstraints>
             <gco:CharacterString>We simply ask that you acknowledge the copyright and the source of the data by including the following attribution statement: Contains OS data © Crown copyright and database right 2020 Contains Royal Mail data © Royal Mail copyright and Database right 2020 Contains National Statistics data © Crown copyright and database right 2020</gco:CharacterString>
           </gmd:otherConstraints>
+      </gmd:MD_LegalConstraints>
       </xsl:template>
     
     
@@ -136,52 +134,45 @@
         <xsl:message>=== Removing geographic elements</xsl:message>
     </xsl:template>
     
-    <!-- remove remaining empty extent blocks -->
-    <xsl:template match="gmd:extent[not(descendant::gmd:temporalElement) and not(descendant::gml:TimePeriod)]" priority="10">
+       
+    <!-- Copy timePeriod, with a nasty hack to update namespaces -->
+    <xsl:template match="//*:TimePeriod" priority="30">
+        <xsl:message>=== Matching timeperiod</xsl:message>
+        <xsl:variable name="beginPosition" select="./*:beginPosition"/>
+        <xsl:variable name="endPosition" select="./*:endPosition"/>
+        <xsl:variable name="gmlID" select="@*:id"/>
+        <xsl:variable name="position" select="./*:endPosition/@indeterminatePosition"/>
+        
+        <gml:TimePeriod gml:id="{$gmlID}">
+            <gml:beginPosition><xsl:value-of select="$beginPosition"/></gml:beginPosition>
+            <gml:endPosition indeterminatePosition="{$position}"><xsl:value-of select="$endPosition"/></gml:endPosition>
+        </gml:TimePeriod>
+    </xsl:template>
+    
+    <!-- remove remaining empty extent blocks that don't contain temporal elements -->
+        <xsl:template match="//gmd:extent[not(.//gmd:temporalElement) and not(.//*:TimePeriod)]" priority="10">
         <xsl:message>=== Removing empty extent blocks</xsl:message>
     </xsl:template>
-    
-    <!-- Update gml namespace references for time period-->
-    <xsl:template match="gml:TimePeriod" xmlns:gml="http://www.opengis.net/gml/3.2" priority="10">
-        <xsl:element name="{name()}" namespace="http://www.opengis.net/gml">
-            <xsl:attribute name="gml:id" namespace="http://www.opengis.net/gml">ID0EUE</xsl:attribute>
-            <!--<xsl:apply-templates select="*|@*"/>-->
-            <xsl:apply-templates select="node()"/>
-        </xsl:element>
-    </xsl:template>
-    
-    <xsl:template match="gml:beginPosition" xmlns:gml="http://www.opengis.net/gml/3.2" priority="100">
-        <xsl:element name="{name()}" namespace="http://www.opengis.net/gml">
-            <xsl:apply-templates/>
-        </xsl:element>
-    </xsl:template>
-    
-    <xsl:template match="gml:endPosition" xmlns:gml="http://www.opengis.net/gml/3.2" priority="100">
-        <xsl:variable name="position" select="@indeterminatePosition"/>
-        <xsl:element name="{name()}" namespace="http://www.opengis.net/gml/3.2">
-            <xsl:attribute name="indeterminatePosition"><xsl:value-of select="$position"/></xsl:attribute>
-            <xsl:apply-templates/>
-        </xsl:element>
-    </xsl:template>
-    
+       
     
     <!--  Remove gmd:referenceSystemInfo elements  -->
-    <xsl:template match="gmd:referenceSystemInfo" priority="10">
+    <xsl:template match="//gmd:referenceSystemInfo" priority="10">
         <xsl:message>=== Removing reference system info</xsl:message>
     </xsl:template>
     
     <!--  Remove gmd:spatialRepresentationType elements  -->
-    <xsl:template match="gmd:spatialRepresentationType" priority="10">
+    <xsl:template match="//gmd:spatialRepresentationType" priority="100">
         <xsl:message>=== Removing spatial representation type</xsl:message>
     </xsl:template>
     
     <!--  Remove geonet:* elements.  -->
     <xsl:template match="geonet:*" priority="10"/>
     
-    <!--<xsl:template match="@*|node()">
-        <xsl:copy  copy-namespaces="no">
+    <xsl:template match="@*|node()">
+        <xsl:copy>
             <xsl:apply-templates select="@*|node()"/>
         </xsl:copy>
-    </xsl:template>-->
+    </xsl:template>
+  
     
 </xsl:stylesheet>
