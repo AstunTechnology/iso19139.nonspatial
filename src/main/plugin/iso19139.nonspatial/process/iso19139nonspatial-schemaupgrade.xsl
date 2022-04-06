@@ -11,7 +11,7 @@
     xmlns:geonet="http://www.fao.org/geonetwork"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:eamp="http://environment.data.gov.uk/eamp"
-    exclude-result-prefixes="gml">
+    exclude-result-prefixes="#all">
     
     <xsl:output method="xml" version="1.0" encoding="UTF-8" indent="yes" />
     
@@ -130,7 +130,7 @@
     </xsl:template>
     
     <!-- remove geographic element blocks that don't also contain a temporal extent-->
-    <xsl:template match="//gmd:geographicElement" priority="20">
+    <xsl:template match="gmd:geographicElement" priority="20">
         <xsl:message>=== Removing geographic elements</xsl:message>
     </xsl:template>
     
@@ -145,7 +145,7 @@
         
         <gml:TimePeriod gml:id="{$gmlID}">
             <gml:beginPosition><xsl:value-of select="$beginPosition"/></gml:beginPosition>
-            <gml:endPosition indeterminatePosition="{$position}"><xsl:value-of select="$beginPosition"/></gml:endPosition>
+            <gml:endPosition indeterminatePosition="{$position}"><xsl:value-of select="$endPosition"/></gml:endPosition>
         </gml:TimePeriod>
     </xsl:template>
     
@@ -161,7 +161,7 @@
     </xsl:template>
     
     <!--  Remove gmd:spatialRepresentationType elements  -->
-    <xsl:template match="//gmd:spatialRepresentationType" priority="10">
+    <xsl:template match="//gmd:spatialRepresentationType" priority="100">
         <xsl:message>=== Removing spatial representation type</xsl:message>
     </xsl:template>
     
