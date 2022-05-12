@@ -58,6 +58,60 @@
         
     </xsl:template>
     
+    <!-- add a NonSpatial keyword if it doesn't exist already -->
+    <xsl:template match="//gmd:descriptiveKeywords/gmd:MD_Keywords" priority="10">
+        <!-- remember gmd:type which sits alongside the (multiple) keywords inside the MD_Keywords block --><gmd:MD_Keywords>
+        <xsl:choose>
+        <xsl:when test="not([gmd:keyword/gco:CharacterString]='NonSpatial')">
+            <xsl:for-each select="./gmd:keyword/gco:CharacterString">
+                <xsl:variable name="keyword"><xsl:value-of select="."/></xsl:variable>
+                <gmd:keyword>
+                    <gco:CharacterString><xsl:value-of select="$keyword"/></gco:CharacterString>
+                </gmd:keyword>
+            </xsl:for-each>
+                <gmd:keyword>
+                   <gco:CharacterString>NonSpatial</gco:CharacterString> 
+                   </gmd:keyword>
+        </xsl:when>
+            <xsl:otherwise>
+                <xsl:for-each select="./gmd:keyword/gco:CharacterString">
+                    <xsl:variable name="keyword"><xsl:value-of select="."/></xsl:variable>
+                    <gmd:keyword>
+                        <gco:CharacterString><xsl:value-of select="$keyword"/></gco:CharacterString>
+                    </gmd:keyword>
+                </xsl:for-each>
+            </xsl:otherwise>
+        </xsl:choose>
+        <gmd:type>
+            <gmd:MD_KeywordTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode" codeListValue="theme" />
+        </gmd:type>
+        </gmd:MD_Keywords>
+        
+        
+        <!--<xsl:for-each select="./gmd:keyword/gco:CharacterString">
+            <xsl:message>==== Keyword template matched: <xsl:value-of select="."/>====</xsl:message>
+            <xsl:variable name="keyword"><xsl:value-of select="."/></xsl:variable>
+            <xsl:choose>
+            <xsl:when test=".=normalize-space('NonSpatial')">
+                <xsl:message>==== Copying existing NonSpatial Keyword ====</xsl:message>
+                          <gmd:keyword>
+                            <gco:CharacterString><xsl:value-of select="$keyword"/></gco:CharacterString>
+                        </gmd:keyword>           
+           </xsl:when>
+               <xsl:otherwise>
+                   <xsl:message>==== Copying any other Keywords ====</xsl:message>
+                            <gmd:keyword>
+                               <gco:CharacterString><xsl:value-of select="$keyword"/></gco:CharacterString> 
+                           </gmd:keyword>
+                   <xsl:message>==== Add NonSpatial Keyword ====</xsl:message>
+                   <gmd:keyword>
+                       <gco:CharacterString>NonSpatial</gco:CharacterString> 
+                   </gmd:keyword>
+               </xsl:otherwise>
+              </xsl:choose>
+        </xsl:for-each>-->
+    </xsl:template>
+    
     <!--  Change hierarchy level and level name  -->
      <xsl:template match="//gmd:hierarchyLevel" priority="10">
           <xsl:message>=== Updating hierarchyLevel</xsl:message>
@@ -116,7 +170,7 @@
             <gmx:Anchor xlink:href="http://reference.data.gov.uk/id/open-government-licence">Open Government Licence</gmx:Anchor>
           </gmd:otherConstraints>
           <gmd:otherConstraints>
-            <gco:CharacterString>We simply ask that you acknowledge the copyright and the source of the data by including the following attribution statement: Contains OS data © Crown copyright and database right 2020 Contains Royal Mail data © Royal Mail copyright and Database right 2020 Contains National Statistics data © Crown copyright and database right 2020</gco:CharacterString>
+            <gco:CharacterString>© Crown Copyright</gco:CharacterString>
           </gmd:otherConstraints>
       </gmd:MD_LegalConstraints>
       </xsl:template>
