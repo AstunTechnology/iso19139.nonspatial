@@ -328,9 +328,8 @@
   </multilingualFields>
 
   <tableFields>
-    <table for="gmd:CI_ResponsibleParty">
+    <!-- <table for="gmd:CI_ResponsibleParty">
       <header>
-        <!-- TODO: Add label from strings.xml / label with context-->
         <col label="gmd:organisationName"/>
         <col label="gmd:individualName"/>
         <col label="gmd:electronicMailAddress"/>
@@ -344,7 +343,7 @@
         <col xpath="gmd:role"/>
         <col del=".."/>
       </row>
-    </table>
+    </table> -->
     <table for="gmd:CI_OnlineResource">
       <header>
         <col label="gmd:protocol"/>
@@ -458,8 +457,11 @@
             <field
             xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:abstract"/>
             <text ref="abstract_help"/>
-            <field
-            xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:pointOfContact"/>
+            <field name="pointOfContact"
+                 xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:pointOfContact"
+                 or="pointOfContact"
+                 in="/gmd:MD_Metadata/gmd:identificationInfo/*"
+                 del="."/>
             <text ref="pointofcontact_help"/>
             <field
             xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:resourceMaintenance/gmd:MD_MaintenanceInformation/gmd:maintenanceAndUpdateFrequency"/>
