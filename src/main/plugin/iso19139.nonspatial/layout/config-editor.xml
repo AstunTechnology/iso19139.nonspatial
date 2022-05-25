@@ -451,12 +451,39 @@
             <field
             xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:alternateTitle"/>
             <text ref="alttitle_help"/>
-            <field
-            xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:date"/>
-            <text ref="date_help"/>
+            
+            <!-- <field name="date"
+            xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:date"
+            or="date"
+            in="/gmd:MD_Metadata/gmd:identificationInfo/*"
+            del="."/> -->
+              <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/
+                gmd:date"/>
+              <action type="add" name="referenceDate" or="date"  btnLabel="referenceDate"
+                      in="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation">
+                <template>
+                  <snippet>
+                    <gmd:date>
+                      <gmd:CI_Date>
+                        <gmd:date>
+                          <gco:Date></gco:Date>
+                        </gmd:date>
+                        <gmd:dateType>
+                          <gmd:CI_DateTypeCode
+                            codeList="http://www.isotc211.org/2005/resources/codeList.xml#CI_DateTypeCode"
+                            codeListValue="revision"/>
+                        </gmd:dateType>
+                      </gmd:CI_Date>
+                    </gmd:date>
+                  </snippet>
+                </template>
+              </action>
+                  <text ref="date_help"/>
+            
             <field
             xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:abstract"/>
             <text ref="abstract_help"/>
+            
             <field name="pointOfContact"
                  xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:pointOfContact"
                  or="pointOfContact"
@@ -612,6 +639,7 @@
         <for name="gmd:descriptiveKeywords"/>
         <for name="gmd:keyword"/>
         <for name="gmd:pointOfContact"/>
+        <for name="gmd:date"/>
         <for name="gmd:distributor"/>
         <for name="gmd:distributionFormat"/>
         <for name="gmd:contact"/>

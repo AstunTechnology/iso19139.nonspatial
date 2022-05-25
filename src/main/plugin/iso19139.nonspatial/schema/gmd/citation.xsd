@@ -46,7 +46,7 @@
 				<xs:sequence>
 					<xs:element name="title" type="gco:CharacterString_PropertyType"/>
 					<xs:element name="alternateTitle" type="gco:CharacterString_PropertyType" minOccurs="0" maxOccurs="unbounded"/>
-					<xs:element name="date" type="gmd:CI_Date_PropertyType" maxOccurs="unbounded"/>
+					<xs:element name="date" type="gmd:CI_Date_PropertyType" minOccurs="1" maxOccurs="unbounded"/>
 					<xs:element name="edition" type="gco:CharacterString_PropertyType" minOccurs="0"/>
 					<xs:element name="editionDate" type="gco:Date_PropertyType" minOccurs="0"/>
 					<xs:element name="identifier" type="gmd:MD_Identifier_PropertyType" minOccurs="0" maxOccurs="unbounded"/>
