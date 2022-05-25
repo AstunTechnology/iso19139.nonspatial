@@ -494,6 +494,26 @@ JANUARY 2022
                 <sch:value-of select="$loc/strings/report.requiredLanguage"/>
             </sch:report>
         </sch:rule>
+        <sch:rule context="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine/gmd:CI_OnlineResource/gmd:description">
+            <sch:let name="text" value="(gco:CharacterString | .//gmd:LocalisedCharacterString)[normalize-space(text()) != '']"/>
+            <sch:let name="nilReason" value="@gco:nilReason and not(./node())"/>
+            <sch:assert test="$text or $nilReason">
+                <sch:value-of select="$loc/strings/alert.requiredDescription"/>
+            </sch:assert>
+            <sch:report test="node() | @gco:nilReason" >
+                <sch:value-of select="$loc/strings/report.requiredDescription"/>
+            </sch:report>
+        </sch:rule>
+       <sch:rule context="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine/gmd:CI_OnlineResource/gmd:name">
+            <sch:let name="text" value="(gco:CharacterString | .//gmd:LocalisedCharacterString)[normalize-space(text()) != '']"/>
+            <sch:let name="nilReason" value="@gco:nilReason and not(./node())"/>
+            <sch:assert test="$text or $nilReason">
+                <sch:value-of select="$loc/strings/alert.requiredName"/>
+            </sch:assert>
+            <sch:report test="node() | @gco:nilReason" >
+                <sch:value-of select="$loc/strings/report.requiredName"/>
+            </sch:report>
+        </sch:rule>
     </sch:pattern>
 
     <sch:pattern>
