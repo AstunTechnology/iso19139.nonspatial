@@ -94,7 +94,7 @@
   <hierarchyLevel>Hierarchy level</hierarchyLevel>
   <publicationDate>Publication date</publicationDate>
   <revisionDate>Revision date</revisionDate>
-  <temporalRangeSection>Temporal extent</temporalRangeSection>
+  <temporalRangeSection>Add Temporal Extent</temporalRangeSection>
   <beginPosition>Begin</beginPosition>
   <endPosition>End</endPosition>
   <conformity>Conformity</conformity>
@@ -128,7 +128,7 @@
   <add-extent-from-geokeywordsHelp>Analyze each keyword of type place and add matching extent.
   </add-extent-from-geokeywordsHelp>
   <classificationSection>Classification of data and services</classificationSection>
-  <temporalSection>Temporal reference</temporalSection>
+  <temporalSection>Temporal Extent</temporalSection>
   <restrictionsSection>Restrictions on access and use</restrictionsSection>
   <metadataSection>Metadata information</metadataSection>
   <responsibleOrganisationSection>Responsible organization (s)</responsibleOrganisationSection>
@@ -139,7 +139,7 @@
   <inspireServiceTaxonomy>INSPIRE Service Taxonomy</inspireServiceTaxonomy>
   <otherConstraints>Other constraints</otherConstraints>
   <operatesOn>Coupled resource</operatesOn>
-  <extent>Geographic bounding box</extent>
+  <extent>Temporal Extent</extent>
   <spatialExtent>Spatial extent</spatialExtent>
 
   <freeTextKeywords>Other keywords</freeTextKeywords>
@@ -187,7 +187,7 @@
       <p class="help-block">Keywords describing the resource (optional)</p></div></div></keywords_help>
   <topiccategory_help><div class="row">
     <div class="col-xs-offset-2 col-xs-8">
-      <p class="help-block">A topic for the resource (optional, delete if not required)</p></div></div></topiccategory_help>
+      <p class="help-block">A topic for the resource (optional, leave blank if not required)</p></div></div></topiccategory_help>
   <tempextent_help><div class="row">
     <div class="col-xs-offset-2 col-xs-8">
       <p class="help-block">The temporal extent of the resource (optional, delete if not required)</p></div></div></tempextent_help>
