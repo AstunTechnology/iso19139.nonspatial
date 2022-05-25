@@ -91,22 +91,6 @@ JANUARY 2022
 		</sch:rule>
 	</sch:pattern>
 
-	<sch:pattern>
-		<sch:title>$loc/strings/M7</sch:title>
-		<!-- UNVERIFIED -->
-		<sch:rule id="CRSLabelsPosType" context="//*[local-name() = 'DirectPositionType']">
-			<sch:report test="not(@srsDimension) or @srsName"
-				>$loc/strings/alert.M6.directPosition</sch:report>
-			<sch:report test="not(@axisLabels) or @srsName"
-				>$loc/strings/alert.M7.axisAndSrs</sch:report>
-			<sch:report test="not(@uomLabels) or @srsName"
-				>$loc/strings/alert.M7.uomAndSrs</sch:report>
-			<sch:report
-				test="(not(@uomLabels) and not(@axisLabels)) or (@uomLabels and @axisLabels)"
-				>$loc/strings/alert.M7.uomAndAxis</sch:report>
-		</sch:rule>
-	</sch:pattern>
-
 	<!--anzlic/trunk/gml/3.2.0/gmd/citation.xsd-->
 	<!-- TEST 21 FXCHECK -->
 	<sch:pattern>
@@ -424,21 +408,6 @@ JANUARY 2022
 			<sch:report
 				test="$shortName = false()"
 				>$loc/strings/report.M29</sch:report>
-		</sch:rule>
-	</sch:pattern>
-	<!-- anzlic/trunk/gml/3.2.0/gmd/spatialRepresentation.xsd-->
-	<!-- TEST 12 -->
-	<sch:pattern>
-		<sch:title>$loc/strings/M30</sch:title>
-		<sch:rule context="//gmd:MD_Georectified">
-			<sch:let name="cpd" value="(gmd:checkPointAvailability/gco:Boolean='1' or gmd:checkPointAvailability/gco:Boolean='true') and 
-				(not(gmd:checkPointDescription) or count(gmd:checkPointDescription[@gco:nilReason='missing'])>0)"/>
-			<sch:assert
-				test="$cpd = false()"
-				>$loc/strings/alert.M30</sch:assert>
-			<sch:report
-				test="$cpd = false()"
-				>$loc/strings/report.M30</sch:report>
 		</sch:rule>
 	</sch:pattern>
 	<!--  -->
