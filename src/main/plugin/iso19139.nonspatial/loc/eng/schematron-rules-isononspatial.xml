@@ -263,6 +263,12 @@
   <alert.requiredCitation>Data Identification Citation is a required element
   </alert.requiredCitation>
   <report.requiredCitation>Data Identification Citation found</report.requiredCitation>
+  <alert.requiredDescription>Distribution Description is a required element
+  </alert.requiredDescription>
+  <report.requiredDescription>Distribution Description found</report.requiredDescription>
+  <alert.requiredName>Distribution Name is a required element
+  </alert.requiredName>
+  <report.requiredName>Distribution Name found</report.requiredName>
   <requiredElements>Required Elements</requiredElements>
   <requireCitation>Citation</requireCitation>
 
@@ -273,5 +279,9 @@
   <ISONS002>Resource Name</ISONS002>
   <ISONS002.alert.name>Online resource locators must have a name</ISONS002.alert.name>
   <ISONS002.required.name>Online resource locator has a name element</ISONS002.required.name>
+
+  <required.keyword.title>NonSpatial Keyword</required.keyword.title>
+  <required.keyword.alert>There must be at one and only one keyword exactly matching "NonSpatial"</required.keyword.alert>
+  <required.keyword.report>There is a keyword "NonSpatial"</required.keyword.report>
 
 </strings>

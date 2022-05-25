@@ -528,7 +528,7 @@ JANUARY 2022
         </sch:rule>
     </sch:pattern>
 
-    <!-- resource description and name -->
+    <!-- resource description and name missing-->
 
     <sch:pattern>
         <sch:title>$loc/strings/ISONS001</sch:title>
@@ -546,5 +546,16 @@ JANUARY 2022
      </sch:rule>
     </sch:pattern>
 
+    <!-- no nonSpatial keyword-->
+
+    <sch:pattern>
+    	<sch:title>$loc/strings/required.keyword.title</sch:title>
+    	<sch:rule context="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:descriptiveKeywords/gmd:MD_Keywords">
+    		<sch:let name="kw" value="count(./gmd:keyword/gco:CharacterString/text()[contains(.,'NonSpatial')])"/>
+    		<sch:assert test="$kw = 1" >$loc/strings/required.keyword.alert</sch:assert>
+    			
+    		<sch:report test="$kw = 1">$loc/strings/required.keyword.report</sch:report>
+		</sch:rule>
+	</sch:pattern>
 
 </sch:schema>
