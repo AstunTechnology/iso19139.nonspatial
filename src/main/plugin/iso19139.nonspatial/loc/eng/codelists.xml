@@ -1743,13 +1743,13 @@
       </description>
     </entry>
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
-    <entry>
+    <!-- <entry>
       <code>elevation</code>
       <label>Elevation</label>
       <description>Height above or below sea level. Examples: altitude, bathymetry, digital
         elevation models, slope, derived products
       </description>
-    </entry>
+    </entry> -->
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
     <entry>
       <code>environment</code>
@@ -1779,13 +1779,13 @@
       </description>
     </entry>
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
-    <entry>
+    <!-- <entry>
       <code>imageryBaseMapsEarthCover</code>
       <label>Imagery base maps earth cover</label>
       <description>Base maps. Examples: land cover, topographic maps, imagery, unclassified
         images, annotations
       </description>
-    </entry>
+    </entry> -->
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
     <entry>
       <code>intelligenceMilitary</code>
@@ -1804,13 +1804,13 @@
       </description>
     </entry>
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
-    <entry>
+    <!-- <entry>
       <code>location</code>
       <label>Location</label>
       <description>Positional information and services. Examples: addresses, geodetic networks,
         control points, postal zones and services, place names
       </description>
-    </entry>
+    </entry> -->
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
     <entry>
       <code>oceans</code>
