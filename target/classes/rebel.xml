@@ -2,7 +2,7 @@
 <application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.zeroturnaround.com" xsi:schemaLocation="http://www.zeroturnaround.com http://www.zeroturnaround.com/alderaan/rebel-2_0.xsd">
 
 	<classpath>
-		<dir name="/home/jo/Git/custom-geonetwork/schemas/iso19139.nonspatial/target/classes">
+		<dir name="/home/jo/Git/core-geonetwork/schemas/iso19139.nonspatial/target/classes">
 		</dir>
 	</classpath>
 

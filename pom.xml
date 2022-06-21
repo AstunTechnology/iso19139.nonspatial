@@ -3,35 +3,27 @@
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <parent>
-    <artifactId>schemas</artifactId>
+    <artifactId>gn-schemas</artifactId>
     <groupId>org.geonetwork-opensource.schemas</groupId>
-    <version>3.12-SNAPSHOT</version>
+    <version>4.2.0-0</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>schema-iso19139.nonspatial</artifactId>
-  <name>Non-spatial metadata profile based on ISO19139:2007</name>
+  <artifactId>gn-schema-iso19139.nonspatial</artifactId>
+  <name>GeoNetwork schema plugin for non-spatial metadata based on ISO19139:2007</name>
 
   <dependencies>
     <dependency>
-      <groupId>${project.groupId}</groupId>
-      <artifactId>schema-core</artifactId>
+      <groupId>org.geonetwork-opensource.schemas</groupId>
+      <artifactId>gn-schema-core</artifactId>
       <version>${project.version}</version>
     </dependency>
 
     <dependency>
-      <groupId>${project.groupId}</groupId>
-      <artifactId>schema-iso19139</artifactId>
+      <groupId>org.geonetwork-opensource</groupId>
+      <artifactId>gn-core</artifactId>
       <version>${project.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.xmlunit</groupId>
-      <artifactId>xmlunit-core</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.xmlunit</groupId>
-      <artifactId>xmlunit-matchers</artifactId>
+      <scope>provided</scope>
     </dependency>
   </dependencies>
 
@@ -48,7 +40,6 @@
     <plugins>
       <plugin>
         <artifactId>maven-jar-plugin</artifactId>
-        <version>2.5</version>
         <executions>
           <execution>
             <id>test-jar</id>
@@ -58,9 +49,28 @@
           </execution>
         </executions>
       </plugin>
-    </plugins>
-  </build>
 
+      <!-- package up plugin folder as a zip -->
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>plugin-assembly</id>
+            <phase>package</phase>
+            <goals><goal>single</goal></goals>
+            <inherited>false</inherited>
+            <configuration>
+             <appendAssemblyId>false</appendAssemblyId>
+             <descriptors>
+              <descriptor>src/assembly/schema-plugin.xml</descriptor>
+             </descriptors>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      </plugins>
+  </build>
   <profiles>
     <profile>
       <id>run-static-analysis</id>
