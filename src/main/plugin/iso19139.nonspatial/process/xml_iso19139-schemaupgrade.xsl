@@ -62,7 +62,7 @@
     <xsl:template match="//gmd:descriptiveKeywords/gmd:MD_Keywords" priority="10">
         <!-- remember gmd:type which sits alongside the (multiple) keywords inside the MD_Keywords block --><gmd:MD_Keywords>
         <xsl:choose>
-        <xsl:when test="not([gmd:keyword/gco:CharacterString]='NonSpatial')">
+        <xsl:when test="not(gmd:keyword/gco:CharacterString='NonSpatial')">
             <xsl:for-each select="./gmd:keyword/gco:CharacterString">
                 <xsl:variable name="keyword"><xsl:value-of select="."/></xsl:variable>
                 <gmd:keyword>
