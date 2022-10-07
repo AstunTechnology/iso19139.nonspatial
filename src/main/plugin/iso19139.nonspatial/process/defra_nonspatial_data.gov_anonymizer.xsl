@@ -7,96 +7,39 @@
 	Version:	1
 -->
 
-<xsl:stylesheet version="1.0" exclude-result-prefixes="eamp" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:eamp="http://environment.data.gov.uk/eamp" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<xsl:stylesheet version="1.0" exclude-result-prefixes="eamp" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:eamp="http://environment.data.gov.uk/eamp" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	
 	<xsl:output method="xml" version="1.0" encoding="UTF-8" indent="yes" omit-xml-declaration="no"/>
 	
 	<!-- Add any nodes here that are not to be copied over. Separate with '|', a pipe. If node is a parent, children will not be copied either. -->
 	<xsl:template match="gmd:pointOfContact"/>
 	
-	<!-- Remove AfA element and switch around some info specific to data.gov.uk as requested by CJ, MG and WT -->
-	<xsl:template match="*/gmd:resourceConstraints">
-		<xsl:if test="not(./eamp:EA_Constraints)">
-			<xsl:for-each select="./gmd:MD_LegalConstraints/gmd:otherConstraints/gco:CharacterString">
-				<xsl:if test="contains(.,'For details on the licensing restrictions and conditions associated')">
-					<gmd:resourceConstraints>
-						<gmd:MD_Constraints>
-							<gmd:useLimitation>
-								<gco:CharacterString>Use limitation dependent upon licence</gco:CharacterString>
-							</gmd:useLimitation>
-						</gmd:MD_Constraints>
-					</gmd:resourceConstraints>
-					<gmd:resourceConstraints>
-						<gmd:MD_LegalConstraints>
-							<gmd:accessConstraints>
-								<gmd:MD_RestrictionCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_RestrictionCode" codeListValue="otherRestrictions" codeSpace="ISOTC211/19115">otherRestrictions</gmd:MD_RestrictionCode>
-							</gmd:accessConstraints>
-							<gmd:accessConstraints>
-								<gmd:MD_RestrictionCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_RestrictionCode" codeListValue="license" codeSpace="ISOTC211/19115">license</gmd:MD_RestrictionCode>
-							</gmd:accessConstraints>
-							<gmd:accessConstraints>
-								<gmd:MD_RestrictionCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_RestrictionCode" codeListValue="copyright" codeSpace="ISOTC211/19115">copyright</gmd:MD_RestrictionCode>
-							</gmd:accessConstraints>
-							<gmd:otherConstraints>
-								<gco:CharacterString><xsl:value-of select="../../gmd:otherConstraints[last()]/gco:CharacterString[last()]"></xsl:value-of></gco:CharacterString>
-							</gmd:otherConstraints>
-						</gmd:MD_LegalConstraints>
-					</gmd:resourceConstraints>						
-				</xsl:if>
-				<xsl:if test="contains(.,'Data will be licensed')">
-					<gmd:resourceConstraints>
-						<gmd:MD_Constraints>
-							<gmd:useLimitation>
-								<gco:CharacterString><xsl:value-of select="."></xsl:value-of></gco:CharacterString>
-							</gmd:useLimitation>
-						</gmd:MD_Constraints>
-					</gmd:resourceConstraints>
-					<gmd:resourceConstraints>
-						<gmd:MD_LegalConstraints>
-							<gmd:accessConstraints>
-								<gmd:MD_RestrictionCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_RestrictionCode" codeListValue="otherRestrictions" codeSpace="ISOTC211/19115">otherRestrictions</gmd:MD_RestrictionCode>
-							</gmd:accessConstraints>
-							<gmd:accessConstraints>
-								<gmd:MD_RestrictionCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_RestrictionCode" codeListValue="license" codeSpace="ISOTC211/19115">license</gmd:MD_RestrictionCode>
-							</gmd:accessConstraints>
-							<gmd:accessConstraints>
-								<gmd:MD_RestrictionCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_RestrictionCode" codeListValue="copyright" codeSpace="ISOTC211/19115">copyright</gmd:MD_RestrictionCode>
-							</gmd:accessConstraints>
-							<gmd:otherConstraints>
-								<gco:CharacterString>There are no public access constraints to this data. Use of this data is subject to the licence identified.</gco:CharacterString>
-							</gmd:otherConstraints>
-						</gmd:MD_LegalConstraints>
-					</gmd:resourceConstraints>								
-				</xsl:if>
-				<xsl:if test="contains(.,'Open Government Licence')">
-					<gmd:resourceConstraints>
-						<gmd:MD_Constraints>
-							<gmd:useLimitation>
-								<gco:CharacterString><xsl:value-of select="."></xsl:value-of></gco:CharacterString>
-							</gmd:useLimitation>
-						</gmd:MD_Constraints>
-					</gmd:resourceConstraints>
-					<gmd:resourceConstraints>
-						<gmd:MD_LegalConstraints>
-							<gmd:accessConstraints>
-								<gmd:MD_RestrictionCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_RestrictionCode" codeListValue="otherRestrictions" codeSpace="ISOTC211/19115">otherRestrictions</gmd:MD_RestrictionCode>
-							</gmd:accessConstraints>
-							<gmd:accessConstraints>
-								<gmd:MD_RestrictionCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_RestrictionCode" codeListValue="license" codeSpace="ISOTC211/19115">license</gmd:MD_RestrictionCode>
-							</gmd:accessConstraints>
-							<gmd:accessConstraints>
-								<gmd:MD_RestrictionCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_RestrictionCode" codeListValue="copyright" codeSpace="ISOTC211/19115">copyright</gmd:MD_RestrictionCode>
-							</gmd:accessConstraints>
-							<gmd:otherConstraints>
-								<gco:CharacterString>There are no public access constraints to this data. Use of this data is subject to the licence identified.</gco:CharacterString>
-							</gmd:otherConstraints>
-						</gmd:MD_LegalConstraints>
-					</gmd:resourceConstraints>						
-				</xsl:if>
-			</xsl:for-each>
-		</xsl:if>
+	<!-- make sure the OGL license is included and referenced correctly -->
 
-	</xsl:template>
+    <xsl:template match="gmd:MD_LegalConstraints" priority="10">
+        <xsl:message>=== Updating Legal Constraints</xsl:message>
+        <gmd:MD_LegalConstraints>
+          <gmd:useConstraints>
+            <gmd:MD_RestrictionCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_RestrictionCode" codeListValue="otherRestrictions" />
+          </gmd:useConstraints>
+          <gmd:otherConstraints>
+            <gmx:Anchor xlink:href="http://reference.data.gov.uk/id/open-government-licence">Open Government Licence</gmx:Anchor>
+          </gmd:otherConstraints>
+          <gmd:otherConstraints>
+            <gco:CharacterString>© Crown Copyright</gco:CharacterString>
+          </gmd:otherConstraints>
+      </gmd:MD_LegalConstraints>
+      </xsl:template>
+       
+    <!-- remove resource constraints block containing eamp -->
+    <xsl:template match="gmd:resourceConstraints[descendant::eamp:*]" priority="10">
+        <xsl:message>=== Removing EAMP resource constraints blocks</xsl:message>
+    </xsl:template>
+    
+    <!-- remove geographic element blocks that don't also contain a temporal extent-->
+    <xsl:template match="gmd:geographicElement" priority="20">
+        <xsl:message>=== Removing geographic elements</xsl:message>
+    </xsl:template>
 
 	<!-- Add generic Responsible Organisation contact after Abstract. All current ones are obliterated in the empty template above -->
 	<xsl:template match="*/gmd:abstract">
@@ -224,12 +167,12 @@
 	<xsl:template match="*/gmd:metadataStandardName">
 		<xsl:message>==== Updating Metadata Standard Name ====</xsl:message>
 		<gmd:metadataStandardName>
-			<gco:CharacterString>Gemini</gco:CharacterString>
+			<gco:CharacterString>ISO19139 non-spatial</gco:CharacterString>
 		</gmd:metadataStandardName>
 	</xsl:template>
 	<xsl:template match="*/gmd:metadataStandardVersion">
 		<gmd:metadataStandardVersion>
-			<gco:CharacterString>2.2</gco:CharacterString>
+			<gco:CharacterString>1.0</gco:CharacterString>
 		</gmd:metadataStandardVersion>
 	</xsl:template>
 
