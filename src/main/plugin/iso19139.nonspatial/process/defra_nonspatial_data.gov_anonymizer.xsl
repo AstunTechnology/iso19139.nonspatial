@@ -32,9 +32,69 @@
       </xsl:template>
        
     <!-- remove resource constraints block containing eamp -->
-    <xsl:template match="gmd:resourceConstraints[descendant::eamp:*]" priority="10">
+   <!-- <xsl:template match="gmd:resourceConstraints[descendant::eamp:*]" priority="10">
         <xsl:message>=== Removing EAMP resource constraints blocks</xsl:message>
-    </xsl:template>
+    </xsl:template>-->
+	
+	<!-- Remove AfA element and switch around some info specific to data.gov.uk  -->
+	<xsl:template match="*/gmd:resourceConstraints">
+		<xsl:message>Stripping AfA stuff</xsl:message>
+		<xsl:if test="not(./eamp:EA_Constraints)">
+			<xsl:for-each select="./gmd:MD_LegalConstraints/gmd:otherConstraints/gmx:Anchor">
+				<xsl:if test="contains(.,'Data will be licensed')">
+					<gmd:resourceConstraints>
+						<gmd:MD_Constraints>
+							<gmd:useLimitation>
+								<gmx:Anchor xlink:href="{./@xlink:href}"><xsl:value-of select="."></xsl:value-of></gmx:Anchor>
+							</gmd:useLimitation>
+						</gmd:MD_Constraints>
+					</gmd:resourceConstraints>
+					<gmd:resourceConstraints>
+						<gmd:MD_LegalConstraints>
+							<gmd:accessConstraints>
+								<gmd:MD_RestrictionCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_RestrictionCode" codeListValue="otherRestrictions" codeSpace="ISOTC211/19115">otherRestrictions</gmd:MD_RestrictionCode>
+							</gmd:accessConstraints>
+							<gmd:accessConstraints>
+								<gmd:MD_RestrictionCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_RestrictionCode" codeListValue="license" codeSpace="ISOTC211/19115">license</gmd:MD_RestrictionCode>
+							</gmd:accessConstraints>
+							<gmd:accessConstraints>
+								<gmd:MD_RestrictionCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_RestrictionCode" codeListValue="copyright" codeSpace="ISOTC211/19115">copyright</gmd:MD_RestrictionCode>
+							</gmd:accessConstraints>
+							<gmd:otherConstraints>
+								<gco:CharacterString>There are no public access constraints to this data. Use of this data is subject to the licence identified.</gco:CharacterString>
+							</gmd:otherConstraints>
+						</gmd:MD_LegalConstraints>
+					</gmd:resourceConstraints>								
+				</xsl:if>
+				<xsl:if test="contains(.,'Open Government Licence')">
+					<gmd:resourceConstraints>
+						<gmd:MD_Constraints>
+							<gmd:useLimitation>
+								<gmx:Anchor xlink:href="{./@xlink:href}"><xsl:value-of select="."></xsl:value-of></gmx:Anchor>
+							</gmd:useLimitation>
+						</gmd:MD_Constraints>
+					</gmd:resourceConstraints>
+					<gmd:resourceConstraints>
+						<gmd:MD_LegalConstraints>
+							<gmd:accessConstraints>
+								<gmd:MD_RestrictionCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_RestrictionCode" codeListValue="otherRestrictions" codeSpace="ISOTC211/19115">otherRestrictions</gmd:MD_RestrictionCode>
+							</gmd:accessConstraints>
+							<gmd:accessConstraints>
+								<gmd:MD_RestrictionCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_RestrictionCode" codeListValue="license" codeSpace="ISOTC211/19115">license</gmd:MD_RestrictionCode>
+							</gmd:accessConstraints>
+							<gmd:accessConstraints>
+								<gmd:MD_RestrictionCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_RestrictionCode" codeListValue="copyright" codeSpace="ISOTC211/19115">copyright</gmd:MD_RestrictionCode>
+							</gmd:accessConstraints>
+							<gmd:otherConstraints>
+								<gco:CharacterString>There are no public access constraints to this data. Use of this data is subject to the licence identified.</gco:CharacterString>
+							</gmd:otherConstraints>
+						</gmd:MD_LegalConstraints>
+					</gmd:resourceConstraints>						
+				</xsl:if>
+			</xsl:for-each>
+		</xsl:if>
+		
+	</xsl:template>
     
     <!-- remove geographic element blocks that don't also contain a temporal extent-->
     <xsl:template match="gmd:geographicElement" priority="20">
