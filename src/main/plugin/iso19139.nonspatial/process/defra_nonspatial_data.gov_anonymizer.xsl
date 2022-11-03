@@ -1,12 +1,4 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<!--	Trasformation for EAMP extended metadata to data.go.uk, anonymizing and removing information on the way out of GeoNetwork.
-	Some information has been swapped around so that it displays more pertinently on the data.gov.uk website, as the headings of
-	the elements on the display page are not Gemini compliant and a bit muddled.
-	Author:		Environment Agency
-	Date:		2015 02 20
-	Version:	1
--->
-
 <xsl:stylesheet version="1.0" exclude-result-prefixes="eamp" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:eamp="http://environment.data.gov.uk/eamp" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	
 	<xsl:output method="xml" version="1.0" encoding="UTF-8" indent="yes" omit-xml-declaration="no"/>
@@ -31,12 +23,7 @@
       </gmd:MD_LegalConstraints>
       </xsl:template>
        
-    <!-- remove resource constraints block containing eamp -->
-   <!-- <xsl:template match="gmd:resourceConstraints[descendant::eamp:*]" priority="10">
-        <xsl:message>=== Removing EAMP resource constraints blocks</xsl:message>
-    </xsl:template>-->
-	
-	<!-- Remove AfA element and switch around some info specific to data.gov.uk  -->
+	<!-- Remove AfA element and switch around some info specific to data.gov.uk and DSP -->
 	<xsl:template match="*/gmd:resourceConstraints">
 		<xsl:message>Stripping AfA stuff</xsl:message>
 		<xsl:if test="not(./eamp:EA_Constraints)">
@@ -45,7 +32,7 @@
 					<gmd:resourceConstraints>
 						<gmd:MD_Constraints>
 							<gmd:useLimitation>
-								<gmx:Anchor xlink:href="{./@xlink:href}"><xsl:value-of select="."></xsl:value-of></gmx:Anchor>
+								<gco:CharacterString><xsl:value-of select="."></xsl:value-of></gco:CharacterString>
 							</gmd:useLimitation>
 						</gmd:MD_Constraints>
 					</gmd:resourceConstraints>
@@ -70,7 +57,7 @@
 					<gmd:resourceConstraints>
 						<gmd:MD_Constraints>
 							<gmd:useLimitation>
-								<gmx:Anchor xlink:href="{./@xlink:href}"><xsl:value-of select="."></xsl:value-of></gmx:Anchor>
+								<gco:CharacterString><xsl:value-of select="."></xsl:value-of></gco:CharacterString>
 							</gmd:useLimitation>
 						</gmd:MD_Constraints>
 					</gmd:resourceConstraints>
