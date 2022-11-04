@@ -265,15 +265,14 @@
     </dct:description>
     <!-- xpath: gmd:identificationInfo/*/gmd:abstract/gco:CharacterString -->
 
-    <xsl:for-each select="gmd:resourceConstraints/gmd:MD_Constraints/gmd:useLimitation"> 
-      <xsl:variable name="licensestring" select="gco:CharacterString"/>  
-      <xsl:message>======= License: <xsl:value-of select="$licensestring"/> ==========</xsl:message> 
+      
         <!-- <dct:rights>  -->
         <dct:license>
-          <xsl:value-of select="$licensestring"/>
+          <xsl:text>======= License ==========</xsl:text> 
+          <xsl:value-of select="../../gmd:resourceConstraints/gmd:MD_Constraints/gmd:useLimitation/gco:CharacterString"/>
         </dct:license>
         <!-- </dct:rights> -->
-    </xsl:for-each>
+    
 
 
     <!-- "A keyword or tag describing the dataset."

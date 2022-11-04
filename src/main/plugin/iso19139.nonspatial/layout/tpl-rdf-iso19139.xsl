@@ -319,13 +319,17 @@
     <!-- xpath: gmd:identificationInfo/*/gmd:abstract/gco:CharacterString -->
     <xsl:variable name="restrictions" select="gmd:resourceConstraints" />
 
-    <xsl:for-each
-          select="gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints/gmx:Anchor">
+    <!-- <xsl:for-each
+          select="gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints/gco:characterString">
           <xsl:message>=== rights === <xsl:value-of select="."/></xsl:message>
           <dct:rights> <xsl:value-of select="."/></dct:rights>
-          <xsl:message>=== license === <xsl:value-of select="$restrictions/gmd:MD_LegalConstraints/gmd:otherConstraints/gmx:Anchor/@xlink:href"/></xsl:message>
-          <dct:license rdf:resource="{$restrictions/gmd:MD_LegalConstraints/gmd:otherConstraints/gmx:Anchor/@xlink:href}"></dct:license>
-        </xsl:for-each>
+          <xsl:message>=== license === <xsl:value-of select="$restrictions/gmd:MD_Constraints/gmd:useLimitation/gco:CharacterString"/></xsl:message>
+          <dct:license ><xsl:value-of select="$restrictions/gmd:MD_Constraints/gmd:useLimitation/gco:CharacterString"/></dct:license>
+        </xsl:for-each> -->
+
+    <dct:license>
+      <xsl:value-of select="$restrictions/gmd:MD_Constraints/gmd:useLimitation/gco:CharacterString"/>
+    </dct:license>
 
 
     <!-- "A keyword or tag describing the dataset."<xsl:variable name="restrictions" select="gmd:resourceConstraints" />
