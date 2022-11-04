@@ -669,13 +669,16 @@
         </xsl:if>
         <!-- xpath: gmd:protocol/gco:CharacterString -->
 
-        <xsl:for-each
+        <!-- <xsl:for-each
           select="$restrictions/gmd:MD_LegalConstraints/gmd:otherConstraints/gmx:Anchor">
           <xsl:message>=== rights === <xsl:value-of select="."/></xsl:message>
           <dct:rights> <xsl:value-of select="."/></dct:rights>
           <xsl:message>=== license === <xsl:value-of select="$restrictions/gmd:MD_LegalConstraints/gmd:otherConstraints/gmx:Anchor/@xlink:href"/></xsl:message>
           <dct:license rdf:resource="{$restrictions/gmd:MD_LegalConstraints/gmd:otherConstraints/gmx:Anchor/@xlink:href}"></dct:license>
-        </xsl:for-each>
+        </xsl:for-each> -->
+        <dct:license rdf:resource="http://reference.data.gov.uk/id/open-government-licence">
+      <xsl:value-of select="$restrictions/gmd:MD_Constraints/gmd:useLimitation/gco:CharacterString"/>
+    </dct:license>
       </dcat:Distribution>
       </dcat:distribution>
     </xsl:for-each-group>
