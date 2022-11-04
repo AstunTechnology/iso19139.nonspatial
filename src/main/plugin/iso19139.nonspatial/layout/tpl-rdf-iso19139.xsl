@@ -327,7 +327,7 @@
           <dct:license ><xsl:value-of select="$restrictions/gmd:MD_Constraints/gmd:useLimitation/gco:CharacterString"/></dct:license>
         </xsl:for-each> -->
 
-    <dct:license>
+    <dct:license rdf:resource="http://reference.data.gov.uk/id/open-government-licence">
       <xsl:value-of select="$restrictions/gmd:MD_Constraints/gmd:useLimitation/gco:CharacterString"/>
     </dct:license>
 
