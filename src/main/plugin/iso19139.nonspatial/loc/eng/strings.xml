@@ -196,7 +196,7 @@
       <p class="help-block">The format in which the resource is distributed (mandatory)</p></div></div></distributionformat_help>
   <onlineresource_help><div class="row">
     <div class="col-xs-offset-2 col-xs-8">
-      <p class="help-block">A online link to the resource or to a page describing it (mandatory)</p></div></div></onlineresource_help>
+      <p class="help-block">A online link to the resource or to a page describing it (mandatory). Protocol, Resource Locator, Name and Description are all mandatory</p></div></div></onlineresource_help>
   <lineage_help><div class="row">
     <div class="col-xs-offset-2 col-xs-8">
       <p class="help-block">The process used to create the resource (mandatory)</p></div></div></lineage_help>
