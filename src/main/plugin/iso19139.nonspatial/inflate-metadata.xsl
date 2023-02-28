@@ -73,9 +73,27 @@
       </xsl:if>
       <xsl:copy-of select="gmd:environmentDescription" />
       <xsl:copy-of select="gmd:extent" />
+      <!-- add temporal extent if missing -->
+      <!-- <xsl:if test="not(gmd:extent)">
+          <xsl:message>No extent element</xsl:message>
+          <gmd:extent>
+            <gmd:EX_Extent>
+              <xsl:call-template name="addTimePeriodElement" />
+            </gmd:EX_Extent>
+          </gmd:extent>
+        </xsl:if> -->
       <xsl:copy-of select="gmd:supplementalInformation" />
     </xsl:copy>
   </xsl:template>
+
+ <!--  <xsl:template match="gmd:MD_DataIdentification/gmd:extent/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent">
+    <xsl:message>Matching temporal extent template</xsl:message>
+    <xsl:message><xsl:value-of select="count(gml:TimePeriod)"/></xsl:message>
+    <xsl:if test="count(gml:TimePeriod)=0">
+        <xsl:message>No temporal extent</xsl:message>
+             <xsl:call-template name="addTimePeriodElement" />
+        </xsl:if>
+  </xsl:template> -->
 
   <xsl:template match="gmd:MD_Distribution/gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine/gmd:CI_OnlineResource">      
     
@@ -154,6 +172,16 @@
         <xsl:element name="gco:CharacterString"/>
       </xsl:copy>
     </xsl:template>
+
+<!-- temporal extent -->
+    <xsl:template name="addTimePeriodElement">
+      <xsl:message>==== Adding time period element ====</xsl:message>
+          <!-- <gml:TimePeriod gml:id="{generate-id()}"> -->
+          <gml:TimePeriod gml:id="tp1">
+            <gml:beginPosition/>
+            <gml:endPosition/>
+          </gml:TimePeriod>
+  </xsl:template>
 
   <!-- copy everything else -->
 

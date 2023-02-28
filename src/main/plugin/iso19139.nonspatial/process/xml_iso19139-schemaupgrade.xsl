@@ -10,7 +10,6 @@
     xmlns:gmd="http://www.isotc211.org/2005/gmd"
     xmlns:geonet="http://www.fao.org/geonetwork"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
-    xmlns:eamp="http://environment.data.gov.uk/eamp"
     exclude-result-prefixes="#all">
     
     <xsl:output method="xml" version="1.0" encoding="UTF-8" indent="yes" />
@@ -34,7 +33,6 @@
             <xsl:namespace name="xlink" select="'http://www.w3.org/1999/xlink'"/>
             <xsl:namespace name="gmd" select="'http://www.isotc211.org/2005/gmd'"/>
             <xsl:namespace name="xs" select="'http://www.w3.org/2001/XMLSchema'"/>
-            <xsl:namespace name="eamp" select="'http://environment.data.gov.uk/eamp'"/>
             <xsl:namespace name="geonet" select="'http://www.fao.org/geonetwork'"/>
             <xsl:apply-templates select="@*|node()"/>
         </xsl:element>

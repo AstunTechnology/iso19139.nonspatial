@@ -184,16 +184,10 @@
 
   <field name="gmd:EX_Extent">
     <suggest name="gmd:temporalElement"/>
-    <suggest name="gmd:geographicElement"/>
-    <suggest name="gmd:verticalElement"/>
   </field>
 
   <field name="gmd:EX_TemporalExtent">
     <suggest name="gmd:extent"/>
-  </field>
-
-  <field name="gmd:polygon">
-    <suggest name="gml:Polygon"/>
   </field>
 
   <field name="gmd:extent">
@@ -203,13 +197,6 @@
   <field name="gml:TimePeriod">
     <suggest name="gml:beginPosition"/>
     <suggest name="gml:endPosition"/>
-  </field>
-
-  <field name="gmd:EX_GeographicBoundingBox">
-    <suggest name="gmd:westBoundLongitude"/>
-    <suggest name="gmd:eastBoundLongitude"/>
-    <suggest name="gmd:southBoundLatitude"/>
-    <suggest name="gmd:northBoundLatitude"/>
   </field>
 
   <field name="gmd:attributes">

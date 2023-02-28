@@ -1,179 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  ~ Copyright (C) 2001-2016 Food and Agriculture Organization of the
-  ~ United Nations (FAO-UN), United Nations World Food Programme (WFP)
-  ~ and United Nations Environment Programme (UNEP)
-  ~
-  ~ This program is free software; you can redistribute it and/or modify
-  ~ it under the terms of the GNU General Public License as published by
-  ~ the Free Software Foundation; either version 2 of the License, or (at
-  ~ your option) any later version.
-  ~
-  ~ This program is distributed in the hope that it will be useful, but
-  ~ WITHOUT ANY WARRANTY; without even the implied warranty of
-  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-  ~ General Public License for more details.
-  ~
-  ~ You should have received a copy of the GNU General Public License
-  ~ along with this program; if not, write to the Free Software
-  ~ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
-  ~
-  ~ Contact: Jeroen Ticheler - FAO - Viale delle Terme di Caracalla 2,
-  ~ Rome - Italy. email: geonetwork@osgeo.org
-  -->
-
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:gml="http://www.opengis.net/gml/3.2"
-                xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:gmx="http://www.isotc211.org/2005/gmx"
+<xsl:stylesheet version="2.0"
+                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:gml="http://www.opengis.net/gml"
+                xmlns:srv="http://www.isotc211.org/2005/srv"
+                xmlns:gmx="http://www.isotc211.org/2005/gmx"
                 xmlns:gco="http://www.isotc211.org/2005/gco"
                 xmlns:gmd="http://www.isotc211.org/2005/gmd"
-                xmlns:gss="http://www.isotc211.org/2005/gss"
-                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                 xmlns:xlink="http://www.w3.org/1999/xlink"
-                xmlns:gn-fn-iso19139="http://geonetwork-opensource.org/xsl/functions/profiles/iso19139"
-                xmlns:geonet="http://www.fao.org/geonetwork"
-                xmlns:tr="java:org.fao.geonet.api.records.formatters.SchemaLocalizations"
-                xmlns:java="java:org.fao.geonet.util.XslUtil"
-                version="2.0" exclude-result-prefixes="#all">
+                exclude-result-prefixes="#all">
 
-  <xsl:import href="../iso19139/update-fixed-info.xsl"/>
-  <xsl:include href="../iso19139/convert/thesaurus-transformation.xsl"/>
+    <xsl:include href="../iso19139/convert/functions.xsl"/>
 
+    <!-- ================================================================= -->
 
-  <!-- Override template to add gss namespace, to avoid being added to the elements inline.
-       Used in templates and not defined in the template from iso19139
-  -->
-  <xsl:template name="add-namespaces">
-    <xsl:namespace name="xsi" select="'http://www.w3.org/2001/XMLSchema-instance'"/>
-    <xsl:namespace name="gco" select="'http://www.isotc211.org/2005/gco'"/>
-    <xsl:namespace name="gmd" select="'http://www.isotc211.org/2005/gmd'"/>
-    <xsl:namespace name="srv" select="'http://www.isotc211.org/2005/srv'"/>
-    <xsl:namespace name="gmx" select="'http://www.isotc211.org/2005/gmx'"/>
-    <xsl:namespace name="gts" select="'http://www.isotc211.org/2005/gts'"/>
-    <xsl:namespace name="gsr" select="'http://www.isotc211.org/2005/gsr'"/>
-    <xsl:namespace name="gmi" select="'http://www.isotc211.org/2005/gmi'"/>
-    <xsl:namespace name="gss" select="'http://www.isotc211.org/2005/gss'"/>
-    <xsl:choose>
-      <xsl:when test="$isUsing2005Schema and not($isUsing2007Schema)">
-        <xsl:namespace name="gml" select="'http://www.opengis.net/gml'"/>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:namespace name="gml" select="'http://www.opengis.net/gml/3.2'"/>
-      </xsl:otherwise>
-    </xsl:choose>
-    <xsl:namespace name="xlink" select="'http://www.w3.org/1999/xlink'"/>
-  </xsl:template>
+    <xsl:template match="/root">
+        <xsl:apply-templates select="gmd:MD_Metadata"/>
+    </xsl:template>
 
-  <!-- remove empty gco:CharacterString child nodes that have been added by inflate-metadata -->
+    <!-- ================================================================= -->
 
-<!-- <xsl:template match="//*[@gco:nilReason]/gco:CharacterString">
-        <xsl:choose>
-            <xsl:when test="not(text())">
-                <xsl:message>Empty</xsl:message>
-            </xsl:when>
-            <xsl:otherwise>
-                <xsl:message>Not Empty</xsl:message>
-                <xsl:copy>
-                    <xsl:apply-templates select="@*|node()"/>
-                </xsl:copy>
-            </xsl:otherwise>
-        </xsl:choose>
-    </xsl:template> -->
-
-    <!--  Delete empty keyword elements  -->
-  <!-- <xsl:template match="//gmd:descriptiveKeywords[./gmd:MD_Keywords/gmd:keyword/@gco:nilReason='missing']">
-    <xsl:message>==== Removing empty keyword element ====</xsl:message>
-  </xsl:template> -->
-
-  <xsl:template match="gmd:MD_Format/gmd:version[not(string(gco:CharacterString))]" priority="10">
-    <xsl:copy>
-      <!-- Preserve existing gco:nilReason if empty, but if not defined add a default value unknown -->
-      <xsl:apply-templates select="@*"/>
-      <xsl:if test="not(gco:nilReason)">
-        <xsl:attribute name="gco:nilReason">unknown</xsl:attribute>
-      </xsl:if>
-    </xsl:copy>
-  </xsl:template>
-
-  <xsl:template match="gmd:hierarchyLevelName[not(string(gco:CharacterString))]" priority="10">
-    <xsl:copy>
-      <!-- Preserve existing gco:nilReason if empty, but if not defined add a default value inapplicable -->
-      <xsl:apply-templates select="@*"/>
-      <xsl:if test="not(@gco:nilReason)">
-        <xsl:attribute name="gco:nilReason">inapplicable</xsl:attribute>
-      </xsl:if>
-    </xsl:copy>
-  </xsl:template>
-
-  <xsl:template match="gmd:valueUnit[not(string(gco:CharacterString))]" priority="10">
-    <xsl:copy>
-      <!-- Preserve existing gco:nilReason if empty, but if not defined add a default value inapplicable -->
-      <xsl:apply-templates select="@*"/>
-      <xsl:if test="not(@gco:nilReason)">
-        <xsl:attribute name="gco:nilReason">inapplicable</xsl:attribute>
-      </xsl:if>
-    </xsl:copy>
-  </xsl:template>
-
-  <xsl:template match="gmd:DQ_ConformanceResult/gmd:explanation[not(string(gco:CharacterString))]" priority="10">
-    <xsl:copy>
-      <!-- Preserve existing gco:nilReason if empty, but if not defined add a default value unknown -->
-      <xsl:apply-templates select="@*"/>
-      <xsl:if test="not(@gco:nilReason)">
-        <xsl:attribute name="gco:nilReason">unknown</xsl:attribute>
-      </xsl:if>
-    </xsl:copy>
-  </xsl:template>
-
-  <xsl:template match="gmd:LanguageCode[@codeListValue]" priority="10">
-
-    <!-- Retrieve the translation for the codeListValue attribute -->
-    <xsl:variable name="codelistTranslation"
-                  select="tr:codelist-value-label(
-                            tr:create('iso19139.gemini23'),
-                            local-name(), @codeListValue)"/>
-
-    <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/">
-      <xsl:apply-templates select="@*[name(.)!='codeList']"/>
-
-      <xsl:value-of select="$codelistTranslation" />
-    </gmd:LanguageCode>
-  </xsl:template>
-
-  <xsl:template match="//*[(@gco:nilReason='inapplicable' or @gco:nilReason='unknown')]/gco:CharacterString" priority="10">
-    <xsl:choose>
-      <xsl:when test="not(text())">
-        <xsl:message>Empty: <xsl:value-of select="name()" /></xsl:message>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:message>Not Empty: <xsl:value-of select="name()" /></xsl:message>
+    <xsl:template match="gmd:MD_Metadata">
         <xsl:copy>
-          <xsl:apply-templates select="@*|node()"/>
+            <xsl:apply-templates select="@*"/>
+      
+            <gmd:fileIdentifier>
+                <gco:CharacterString>
+                    <xsl:value-of select="/root/env/uuid"/>
+                </gco:CharacterString>
+            </gmd:fileIdentifier>
+      
+            <xsl:apply-templates select="gmd:language"/>
+            <xsl:apply-templates select="gmd:characterSet"/>
+      
+            <xsl:choose>
+                <xsl:when test="/root/env/parentUuid!=''">
+                    <gmd:parentIdentifier>
+                        <gco:CharacterString>
+                            <xsl:value-of select="/root/env/parentUuid"/>
+                        </gco:CharacterString>
+                    </gmd:parentIdentifier>
+                </xsl:when>
+                <xsl:when test="gmd:parentIdentifier">
+                    <xsl:copy-of select="gmd:parentIdentifier"/>
+                </xsl:when>
+            </xsl:choose>
+            <xsl:apply-templates select="node()[not(self::gmd:language) and not(self::gmd:characterSet)]"/>
         </xsl:copy>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
-
-  <!-- remove whole vertical element if both min and max values are empty or not present -->
-  <xsl:template match="gmd:verticalElement">
-    <xsl:variable name="hasMinimumValue" select="string(gmd:EX_VerticalExtent/gmd:minimumValue/gco:Real)" />
-    <xsl:variable name="hasMaximumValue" select="string(gmd:EX_VerticalExtent/gmd:maximumValue/gco:Real)" />
-    <xsl:variable name="hasVerticalCRSContent" select="string(gmd:EX_VerticalExtent/gmd:verticalCRS/@xlink:href) or count(gmd:EX_VerticalExtent/gmd:verticalCRS/*) > 0" />
-
-    <xsl:choose>
-      <xsl:when test="$hasMinimumValue or $hasMaximumValue or $hasVerticalCRSContent">
-         <xsl:copy>
-          <xsl:apply-templates select="@*|node()"/>
-        </xsl:copy>
-      </xsl:when>
-      <xsl:otherwise>
-        <gmd:verticalElement gco:nilReason="inapplicable" />
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
+    </xsl:template>
 
 
+    <!-- ================================================================= -->
+    <!-- Do not process MD_Metadata header generated by previous template  -->
+
+    <xsl:template match="gmd:MD_Metadata/gmd:fileIdentifier|gmd:MD_Metadata/gmd:parentIdentifier" priority="10"/>
+
+    <!-- ================================================================= -->
     <!-- Insert resource id if it does not exist -->
 
+    <!--<xsl:template match="gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:RS_Identifier/gmd:code" >-->
     <xsl:template match="gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation" >
 
         <xsl:copy>
@@ -201,53 +85,408 @@
     </xsl:template>
 
     <!-- ================================================================= -->
-    <!-- Insert character encoding as utf8 if it does not exist -->
+  <!-- DateStamp: only gco:date allowed-->
 
-    <xsl:template match="gmd:identificationInfo/*/gmd:characterSet" >
-      <xsl:copy>
-      <xsl:choose>
-        <xsl:when test="not(gmd:MD_CharacterSetCode/@codeListValue='utf8')">
-        <xsl:message>==== Add missing encoding ====</xsl:message>
-            <gmd:MD_CharacterSetCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_CharacterSetCode"
-                                     codeListValue="utf8"/>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:message>==== Copying existing encoding ====</xsl:message>
-          <xsl:apply-templates select="gmd:MD_CharacterSetCode"/>
-        </xsl:otherwise>
-        </xsl:choose>
-      </xsl:copy>
+  <xsl:template match="gmd:dateStamp">
+    <xsl:choose>
+      <xsl:when test="/root/env/changeDate">
+        <xsl:copy>
+          <gco:Date>
+            <xsl:value-of select="substring-before(/root/env/changeDate, 'T')"/>
+          </gco:Date>
+        </xsl:copy>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:copy-of select="."/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+    <!-- ================================================================= -->
+  
+    <!-- Only set metadataStandardName and metadataStandardVersion if not set. -->
+    <xsl:template match="gmd:metadataStandardName" priority="10">
+        <xsl:copy>
+            <gco:CharacterString>ISO19139 non-spatial</gco:CharacterString>
+        </xsl:copy>
+    </xsl:template>
+  
+    <xsl:template match="gmd:metadataStandardVersion" priority="10">
+        <xsl:copy>
+            <gco:CharacterString>1.0</gco:CharacterString>
+        </xsl:copy>
     </xsl:template>
 
-    <!-- =============================================================== -->
-    <!-- Overwrite ISO19139 template for dealing with uuidref in srv:OperationsOn -->
-    <xsl:template match="srv:operatesOn" priority="10">
-        <xsl:copy>
-          <xsl:copy-of select="@uuidref"/>
-          <xsl:choose>
 
-            <!-- Do not expand operatesOn sub-elements when using uuidref
-                 to link service metadata to datasets or datasets to iso19110.
-             -->
-            <xsl:when test="@uuidref">
-              <xsl:choose>
-                <xsl:when test="not(string(@xlink:href)) or starts-with(@xlink:href, $serviceUrl)">
-                  <xsl:attribute name="xlink:href">
-                    <xsl:value-of
-                      select="concat($serviceUrl,'csw?service=CSW&amp;request=GetRecordById&amp;version=2.0.2&amp;outputSchema=http://www.isotc211.org/2005/gmd&amp;elementSetName=full&amp;id=',@uuidref)"/>
-                  </xsl:attribute>
+    <!-- ================================================================= -->
+
+  <xsl:template
+    match="gmd:topicCategory[not(gmd:MD_TopicCategoryCode)]"
+    priority="10" />
+
+  <!-- ================================================================= -->
+  
+    <xsl:template match="@gml:id">
+        <xsl:choose>
+            <xsl:when test="normalize-space(.)=''">
+                <xsl:attribute name="gml:id">
+                    <xsl:value-of select="generate-id(.)"/>
+                </xsl:attribute>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:copy-of select="."/>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+
+      
+    <!-- ================================================================= -->
+  
+    <xsl:template match="*[gco:CharacterString]">
+        <xsl:copy>
+            <xsl:apply-templates select="@*[not(name()='gco:nilReason')]"/>
+            <xsl:choose>
+                <xsl:when test="normalize-space(gco:CharacterString)=''">
+                    <xsl:attribute name="gco:nilReason">
+                        <xsl:choose>
+                            <xsl:when test="@gco:nilReason">
+                                <xsl:value-of select="@gco:nilReason"/>
+                            </xsl:when>
+                            <xsl:otherwise>missing</xsl:otherwise>
+                        </xsl:choose>
+                    </xsl:attribute>
+                </xsl:when>
+                <xsl:when test="@gco:nilReason!='missing' and normalize-space(gco:CharacterString)!=''">
+                    <xsl:copy-of select="@gco:nilReason"/>
+                </xsl:when>
+            </xsl:choose>
+            <xsl:apply-templates select="node()"/>
+        </xsl:copy>
+    </xsl:template>
+
+    <!-- ================================================================= -->
+    <!-- codelists: set @codeList path -->
+    <!-- ================================================================= -->
+    <xsl:template match="gmd:LanguageCode[@codeListValue]" priority="10">
+        <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/">
+            <xsl:apply-templates select="@*[name(.)!='codeList']"/>
+        </gmd:LanguageCode>
+    </xsl:template>
+  
+  
+    <xsl:template match="gmd:*[@codeListValue]">
+        <xsl:copy>
+            <xsl:apply-templates select="@*"/>
+            <xsl:attribute name="codeList">
+                <xsl:value-of select="concat('http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#',local-name(.))"/>
+            </xsl:attribute>
+        </xsl:copy>
+    </xsl:template>
+
+    <!-- can't find the location of the 19119 codelists - so we make one up -->
+
+    <xsl:template match="srv:*[@codeListValue]">
+        <xsl:copy>
+            <xsl:apply-templates select="@*"/>
+            <xsl:attribute name="codeList">
+                <xsl:value-of select="concat('http://www.isotc211.org/2005/iso19119/resources/Codelist/gmxCodelists.xml#',local-name(.))"/>
+            </xsl:attribute>
+        </xsl:copy>
+    </xsl:template>
+
+    <!-- ================================================================= -->
+    <!-- online resources: download -->
+    <!-- ================================================================= -->
+
+    <xsl:template match="gmd:CI_OnlineResource[matches(gmd:protocol/gco:CharacterString,'^WWW:DOWNLOAD-.*-http--download.*') and gmd:name]">
+        <xsl:variable name="fname" select="gmd:name/gco:CharacterString|gmd:name/gmx:MimeFileType"/>
+        <xsl:variable name="mimeType">
+            <xsl:call-template name="getMimeTypeFile">
+                <xsl:with-param name="datadir" select="/root/env/datadir"/>
+                <xsl:with-param name="fname" select="$fname"/>
+            </xsl:call-template>
+        </xsl:variable>
+
+        <xsl:copy>
+            <xsl:copy-of select="@*"/>
+            <gmd:linkage>
+                <gmd:URL>
+                    <xsl:choose>
+                        <xsl:when test="/root/env/config/downloadservice/simple='true'">
+                            <xsl:value-of select="concat(/root/env/siteURL,'/resources.get?uuid=',/root/env/uuid,'&amp;fname=',$fname,'&amp;access=private')"/>
+                        </xsl:when>
+                        <xsl:when test="/root/env/config/downloadservice/withdisclaimer='true'">
+                            <xsl:value-of select="concat(/root/env/siteURL,'/file.disclaimer?uuid=',/root/env/uuid,'&amp;fname=',$fname,'&amp;access=private')"/>
+                        </xsl:when>
+                        <xsl:otherwise> <!-- /root/env/config/downloadservice/leave='true' -->
+                            <xsl:value-of select="gmd:linkage/gmd:URL"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </gmd:URL>
+            </gmd:linkage>
+            <xsl:copy-of select="gmd:protocol"/>
+            <xsl:copy-of select="gmd:applicationProfile"/>
+            <gmd:name>
+                <gmx:MimeFileType type="{$mimeType}">
+                    <xsl:value-of select="$fname"/>
+                </gmx:MimeFileType>
+            </gmd:name>
+            <xsl:copy-of select="gmd:description"/>
+            <xsl:copy-of select="gmd:function"/>
+        </xsl:copy>
+    </xsl:template>
+
+    <!-- ================================================================= -->
+    <!-- online resources: link-to-downloadable data etc -->
+    <!-- ================================================================= -->
+
+    <xsl:template match="gmd:CI_OnlineResource[starts-with(gmd:protocol/gco:CharacterString,'WWW:LINK-') and contains(gmd:protocol/gco:CharacterString,'http--download')]">
+        <xsl:variable name="mimeType">
+            <xsl:call-template name="getMimeTypeUrl">
+                <xsl:with-param name="linkage" select="gmd:linkage/gmd:URL"/>
+            </xsl:call-template>
+        </xsl:variable>
+
+        <xsl:copy>
+            <xsl:copy-of select="@*"/>
+            <xsl:copy-of select="gmd:linkage"/>
+            <xsl:copy-of select="gmd:protocol"/>
+            <xsl:copy-of select="gmd:applicationProfile"/>
+            <gmd:name>
+                <gmx:MimeFileType type="{$mimeType}"/>
+            </gmd:name>
+            <xsl:copy-of select="gmd:description"/>
+            <xsl:copy-of select="gmd:function"/>
+        </xsl:copy>
+    </xsl:template>
+
+    <!-- ================================================================= -->
+
+    <xsl:template match="gmx:FileName[name(..)!='gmd:contactInstructions']">
+        <xsl:copy>
+            <xsl:attribute name="src">
+                <xsl:choose>
+                    <xsl:when test="/root/env/config/downloadservice/simple='true'">
+                        <xsl:value-of select="concat(/root/env/siteURL,'/resources.get?uuid=',/root/env/uuid,'&amp;fname=',.,'&amp;access=private')"/>
+                    </xsl:when>
+                    <xsl:when test="/root/env/config/downloadservice/withdisclaimer='true'">
+                        <xsl:value-of select="concat(/root/env/siteURL,'/file.disclaimer?uuid=',/root/env/uuid,'&amp;fname=',.,'&amp;access=private')"/>
+                    </xsl:when>
+                    <xsl:otherwise> <!-- /root/env/config/downloadservice/leave='true' -->
+                        <xsl:value-of select="@src"/>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:attribute>
+            <xsl:value-of select="."/>
+        </xsl:copy>
+    </xsl:template>
+
+    <!-- ================================================================= -->
+
+    <!-- Do not allow to expand operatesOn sub-elements
+    and constrain users to use uuidref attribute to link
+    service metadata to datasets. This will avoid to have
+    error on XSD validation. -->
+
+    <xsl:template match="srv:operatesOn|gmd:featureCatalogueCitation">
+        <xsl:copy>
+            <xsl:copy-of select="@uuidref"/>
+            <xsl:if test="@uuidref">
+                <xsl:choose>
+                    <xsl:when test="not(string(@xlink:href)) or starts-with(@xlink:href, /root/env/siteURL)">
+                        <xsl:attribute name="xlink:href">
+                            <xsl:value-of select="concat(/root/env/siteURL,'/csw?service=CSW&amp;request=GetRecordById&amp;version=2.0.2&amp;outputSchema=http://www.isotc211.org/2005/gmd&amp;elementSetName=full&amp;id=',@uuidref)"/>
+                        </xsl:attribute>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:copy-of select="@xlink:href"/>
+                    </xsl:otherwise>
+                </xsl:choose>
+
+            </xsl:if>
+        </xsl:copy>
+
+    </xsl:template>
+
+    <!-- ================================================================= -->
+    <!-- Set local identifier to the first 3 letters of iso code. Locale ids
+        are used for multilingual charcterString using #iso2code for referencing.
+    -->
+    <xsl:template match="gmd:PT_Locale">
+        <xsl:element name="gmd:{local-name()}">
+            <xsl:variable name="id" select="upper-case(
+        substring(gmd:languageCode/gmd:LanguageCode/@codeListValue, 1, 3))"/>
+
+            <xsl:apply-templates select="@*"/>
+            <xsl:if test="normalize-space(@id)='' or normalize-space(@id)!=$id">
+                <xsl:attribute name="id">
+                    <xsl:value-of select="$id"/>
+                </xsl:attribute>
+            </xsl:if>
+            <xsl:apply-templates select="node()"/>
+        </xsl:element>
+    </xsl:template>
+
+    <!-- Apply same changes as above to the gmd:LocalisedCharacterString -->
+    <xsl:variable name="language" select="//gmd:PT_Locale" /> <!-- Need list of all locale -->
+    <xsl:template  match="gmd:LocalisedCharacterString">
+        <xsl:element name="gmd:{local-name()}">
+            <xsl:variable name="currentLocale" select="upper-case(replace(normalize-space(@locale), '^#', ''))"/>
+            <xsl:variable name="ptLocale" select="$language[upper-case(replace(normalize-space(@id), '^#', ''))=string($currentLocale)]"/>
+            <xsl:variable name="id" select="upper-case(substring($ptLocale/gmd:languageCode/gmd:LanguageCode/@codeListValue, 1, 3))"/>
+            <xsl:apply-templates select="@*"/>
+            <xsl:if test="$id != '' and ($currentLocale='' or @locale!=concat('#', $id)) ">
+                <xsl:attribute name="locale">
+                    <xsl:value-of select="concat('#',$id)"/>
+                </xsl:attribute>
+            </xsl:if>
+            <xsl:apply-templates select="node()"/>
+        </xsl:element>
+    </xsl:template>
+
+    <!-- ================================================================= -->
+    <!-- Adjust the namespace declaration - In some cases name() is used to get the
+    element. The assumption is that the name is in the format of  <ns:element>
+    however in some cases it is in the format of <element xmlns=""> so the
+    following will convert them back to the expected value. This also corrects the issue
+    where the <element xmlns=""> loose the xmlns="" due to the exclude-result-prefixes="#all" -->
+    <!-- Note: Only included prefix gml, gmd and gco for now. -->
+    <!-- TODO: Figure out how to get the namespace prefix via a function so that we don't need to hard code them -->
+    <!-- ================================================================= -->
+
+    <xsl:template name="correct_ns_prefix">
+        <xsl:param name="element" />
+        <xsl:param name="prefix" />
+        <xsl:choose>
+            <xsl:when test="local-name($element)=name($element) and $prefix != '' ">
+                <xsl:element name="{$prefix}:{local-name($element)}">
+                    <xsl:apply-templates select="@*|node()"/>
+                </xsl:element>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:copy>
+                    <xsl:apply-templates select="@*|node()"/>
+                </xsl:copy>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+
+    <xsl:template match="gmd:*">
+        <xsl:call-template name="correct_ns_prefix">
+            <xsl:with-param name="element" select="."/>
+            <xsl:with-param name="prefix" select="'gmd'"/>
+        </xsl:call-template>
+    </xsl:template>
+
+    <xsl:template match="gco:*">
+        <xsl:call-template name="correct_ns_prefix">
+            <xsl:with-param name="element" select="."/>
+            <xsl:with-param name="prefix" select="'gco'"/>
+        </xsl:call-template>
+    </xsl:template>
+
+    <xsl:template match="gml:*">
+        <xsl:call-template name="correct_ns_prefix">
+            <xsl:with-param name="element" select="."/>
+            <xsl:with-param name="prefix" select="'gml'"/>
+        </xsl:call-template>
+    </xsl:template>
+
+    <!-- ================================================================= -->
+    <!-- codelists: set text node -->
+    <!-- ================================================================= -->
+    
+    <xsl:template match="gmd:LanguageCode[@codeListValue]" priority="10">
+        <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/">
+            <xsl:apply-templates select="@*[name(.)!='codeList']"/>
+
+            <!-- add a node text-->
+            <xsl:value-of select="@codeListValue"/>
+        </gmd:LanguageCode>
+    </xsl:template>
+
+    <xsl:template match="gmd:*[@codeListValue]">
+        <xsl:copy>
+            <xsl:apply-templates select="@*"/>
+            <xsl:attribute name="codeList">
+                <xsl:value-of select="concat('http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#',local-name(.))"/>
+            </xsl:attribute>
+
+            <!-- add a node text-->
+            <xsl:value-of select="@codeListValue"/>
+        </xsl:copy>
+    </xsl:template>
+
+    <!-- This template fixes gmd:useLimitation before saving the metadata. When adding a gmx:Anchor with the
+         customised code in form-builder for the profile for this element, the backend code of the metadata editor
+         adds also a gco:CharacterString due to special management of this type.
+
+         If gmd:useLimitation contains both gco:CharacterString and gmx:Anchor the 2on is kept.
+
+         This fix manages to work nicely for the time being for gmd:useLimitation allowing the user to select between:
+
+            Text -> gco:CharacterString
+            Anchor -> gmx:Anchor
+
+         To make it generic, allowing for any element based in "gco:CharacterString" subelements to define if should be
+         display a list of replacements or just use the default gco:CharacterString requires changes in several places
+         including Java editor code.
+    -->
+    <xsl:template match="gmd:useLimitation"  priority="10">
+       <!--  <xsl:message>UFI: use limitation 2</xsl:message> -->
+        <xsl:copy>
+            <xsl:apply-templates select="@*[not(name()='gco:nilReason')]"/>
+
+            <xsl:choose>
+                <xsl:when test="gco:CharacterString and gmx:Anchor">
+                    <xsl:choose>
+                        <xsl:when test="normalize-space(gmx:Anchor)=''">
+                            <xsl:attribute name="gco:nilReason">
+                                <xsl:choose>
+                                    <xsl:when test="@gco:nilReason">
+                                        <xsl:value-of select="@gco:nilReason"/>
+                                    </xsl:when>
+                                    <xsl:otherwise>missing</xsl:otherwise>
+                                </xsl:choose>
+                            </xsl:attribute>
+                        </xsl:when>
+                        <xsl:when test="@gco:nilReason!='missing' and normalize-space(gmx:Anchor)!=''">
+                            <xsl:copy-of select="@gco:nilReason"/>
+                        </xsl:when>
+                    </xsl:choose>
+
+                    <xsl:apply-templates select="gmx:Anchor" />
                 </xsl:when>
                 <xsl:otherwise>
-                  <xsl:copy-of select="@xlink:href"/>
-                </xsl:otherwise>
-              </xsl:choose>
-            </xsl:when>
+                    <xsl:choose>
+                        <xsl:when test="normalize-space(*)=''">
+                            <xsl:attribute name="gco:nilReason">
+                                <xsl:choose>
+                                    <xsl:when test="@gco:nilReason">
+                                        <xsl:value-of select="@gco:nilReason"/>
+                                    </xsl:when>
+                                    <xsl:otherwise>missing</xsl:otherwise>
+                                </xsl:choose>
+                            </xsl:attribute>
+                        </xsl:when>
+                        <xsl:when test="@gco:nilReason!='missing' and normalize-space(*)!=''">
+                            <xsl:copy-of select="@gco:nilReason"/>
+                        </xsl:when>
+                    </xsl:choose>
 
-            <xsl:otherwise>
-              <xsl:apply-templates select="@*|node()" />
-            </xsl:otherwise>
-          </xsl:choose>
+                    <xsl:apply-templates select="*" />
+                </xsl:otherwise>
+            </xsl:choose>
         </xsl:copy>
-      </xsl:template>
+    </xsl:template>
+    <!-- ================================================================= -->
+    <!-- copy everything else as is -->
+  
+    <xsl:template match="@*|node()">
+        <xsl:copy>
+            <xsl:apply-templates select="@*|node()"/>
+        </xsl:copy>
+    </xsl:template>
+
 
 </xsl:stylesheet>

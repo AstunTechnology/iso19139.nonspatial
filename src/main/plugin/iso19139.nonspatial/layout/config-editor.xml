@@ -242,6 +242,10 @@
     <name>gmd:topicCategory</name>
   </fieldsWithFieldset>
 
+  <fieldsWithAnchorOption>
+    <name>gmd:linkage</name>
+  </fieldsWithAnchorOption>
+
   <multilingualFields>
     <!-- In multilingual mode, define which mode
     the widget should have. If expanded, then one
@@ -499,15 +503,22 @@
             <field
             xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:topicCategory"/>
             <text ref="topiccategory_help" if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:topicCategory) > 0"/>
-            <section name="temporalSection">
-             <field name="temporalRangeSection" templateModeOnly="true" notDisplayedIfMissing="true"
+            
+          <field
+            xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:extent/gmd:EX_Extent/gmd:temporalElement"
+            if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0">
+          </field>
+          <text ref="tempextent_help" if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0"/>
+
+                  <!-- <section name="temporalSection">
+          <field name="temporalRangeSection" templateModeOnly="true" notDisplayedIfMissing="true"
                    xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:extent/gmd:EX_Extent/gmd:temporalElement"
                    if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0">
               <template>
-                <values>
+                <values> -->
                   <!-- Need a * for gml:TimePeriodTypeCHOICE_ELEMENT2 added by editor enumerated tree -->
-                  <key label="beginPosition"
-                       xpath="gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/*/gml:beginPosition"
+                  <!-- <key label="beginPosition"
+                       xpath="gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod//gml:beginPosition"
                        use="gn-date-picker"
                        tooltip="gmd:extent|gmd:EX_TemporalExtent">
                     <directiveAttributes
@@ -516,7 +527,7 @@
 
                   </key>
                   <key label="endPosition"
-                       xpath="gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/*/gml:endPosition"
+                       xpath="gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod//gml:endPosition"
                        use="gn-date-picker"
                        tooltip="gmd:extent|gmd:EX_TemporalExtent">
                     <directiveAttributes
@@ -541,8 +552,6 @@
               </template>
             </field>
 
-
-
           <action type="add" name="extent" or="extent" btnLabel="temporalRangeSection"
                   in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification"
                   if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:extent/gmd:EX_Extent/gmd:temporalElement) = 0">
@@ -564,15 +573,92 @@
                 </gmd:extent>
               </snippet>
             </template>
-          </action>
+          </action> -->
 
-          <!-- <text ref="tempextent_help" if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:extent/gmd:EX_Extent/gmd:temporalElement) > 0"/> -->
+          <!-- <field name="temporalRangeSection" templateModeOnly="true" notDisplayedIfMissing="true"
+                   xpath="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/srv:extent/gmd:EX_Extent/gmd:temporalElement"
+                   if="count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) > 0">
+              <template>
+                <values> -->
+                  <!-- Need a * for gml:TimePeriodTypeCHOICE_ELEMENT2 added by editor enumerated tree -->
+                 <!--  <key label="beginPosition"
+                       xpath="gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/*/gml:beginPosition"
+                       use="gn-date-picker"
+                       tooltip="gmd:extent|gmd:EX_TemporalExtent">
+                    <directiveAttributes data-tag-name="gml:beginPosition"/>
+                  </key>
+                  <key label="endPosition"
+                       xpath="gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/*/gml:endPosition"
+                       use="gn-date-picker"
+                       tooltip="gmd:extent|gmd:EX_TemporalExtent"
+                  >
+                    <directiveAttributes
+                      data-tag-name="gml:endPosition"/>
+                  </key>
 
-            <text ref="tempextent_help"/>
-            
-          </section>
+                </values>
+                <snippet>
+                  <gmd:temporalElement>
+                    <gmd:EX_TemporalExtent>
+                      <gmd:extent>
+                        <gml:TimePeriod gml:id="">
+                          {{beginPosition}}
+                          {{endPosition}}
+                        </gml:TimePeriod>
+                      </gmd:extent>
+                    </gmd:EX_TemporalExtent>
+                  </gmd:temporalElement>
+                </snippet>
+              </template>
+            </field> -->
 
-        </section>
+    <!--       <action type="add" name="extent" or="extent" btnLabel="temporalRangeSection"
+                  in="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification"
+                  if="count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/srv:extent/gmd:EX_Extent/gmd:temporalElement) = 0">
+            <template>
+              <snippet>
+                <srv:extent>
+                  <gmd:EX_Extent>
+                    <gmd:temporalElement>
+                      <gmd:EX_TemporalExtent>
+                        <gmd:extent>
+                          <gml:TimePeriod gml:id="">
+                            <gml:beginPosition/>
+                            <gml:endPosition/>
+                          </gml:TimePeriod>
+                        </gmd:extent>
+                      </gmd:EX_TemporalExtent>
+                    </gmd:temporalElement>
+                  </gmd:EX_Extent>
+                </srv:extent>
+              </snippet>
+            </template>
+          </action> -->
+
+          <!-- <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/
+            gmd:date"/>
+          <action type="add" name="referenceDate" or="date"  btnLabel="referenceDate"
+                  in="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation">
+            <template>
+              <snippet>
+                <gmd:date>
+                  <gmd:CI_Date>
+                    <gmd:date>
+                      <gco:Date></gco:Date>
+                    </gmd:date>
+                    <gmd:dateType>
+                      <gmd:CI_DateTypeCode
+                        codeList="http://www.isotc211.org/2005/resources/codeList.xml#CI_DateTypeCode"
+                        codeListValue="revision"/>
+                    </gmd:dateType>
+                  </gmd:CI_Date>
+                </gmd:date>
+              </snippet>
+            </template>
+          </action> -->
+        <!-- </section> -->
+
+        
         <section name="gmd:distributionInfo">
             <field name = "distributionFormat" xpath="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributionFormat/gmd:MD_Format/gmd:name" del="../.."/>
                   <action type="add" btnLabel="addDistFormat"
@@ -631,8 +717,9 @@
                  xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:statement"/>
                  <text ref="lineage_help"/>
         </section>
-
+      </section>
       </tab>
+
 
       <!-- Elements that should not use the "flat" mode -->
       <flatModeExceptions>

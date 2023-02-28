@@ -94,7 +94,7 @@
   <hierarchyLevel>Hierarchy level</hierarchyLevel>
   <publicationDate>Publication date</publicationDate>
   <revisionDate>Revision date</revisionDate>
-  <temporalRangeSection>Add Temporal Extent</temporalRangeSection>
+  <temporalRangeSection>Temporal Extent</temporalRangeSection>
   <beginPosition>Begin</beginPosition>
   <endPosition>End</endPosition>
   <conformity>Conformity</conformity>
@@ -190,7 +190,19 @@
       <p class="help-block">A topic for the resource (mandatory)</p></div></div></topiccategory_help>
   <tempextent_help><div class="row">
     <div class="col-xs-offset-2 col-xs-8">
-      <p class="help-block">The temporal extent of the resource (optional, delete if not required)</p></div></div></tempextent_help>
+      <p class="help-block">The temporal extent of the resource (optional, delete if not required).</p>
+      <ol class="help-block">
+            <li>This element should not be confused with the Dataset Reference Date.</li>
+            <li>To indicate an indeterminate date such as "Now" or "Unknown":
+              <ul>
+                <li>Activate "More details" by clicking on the eye button at the top right of the screen</li>
+                <li>From the available options below the appropriate field, choose "Indeterminate position"</li>
+                <li>From the dropdown, choose the appropriate option</li>
+                <li>If the option is "Now" or "Unknown" then leave the date field blank.</li>
+              </ul>
+            </li>
+          </ol>
+        </div></div></tempextent_help>
   <distributionformat_help><div class="row">
     <div class="col-xs-offset-2 col-xs-8">
       <p class="help-block">The format in which the resource is distributed (mandatory)</p></div></div></distributionformat_help>
@@ -200,4 +212,7 @@
   <lineage_help><div class="row">
     <div class="col-xs-offset-2 col-xs-8">
       <p class="help-block">The process used to create the resource (mandatory)</p></div></div></lineage_help>
+
+  <gmd:onLine xmlns:gmd="http://www.isotc211.org/2005/gmd">Online</gmd:onLine>
+  <!-- <pointOfContact>Point of Contact</pointOfContact> -->
 </strings>
