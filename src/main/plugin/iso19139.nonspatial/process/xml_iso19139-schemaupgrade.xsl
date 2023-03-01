@@ -8,6 +8,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:xlink="http://www.w3.org/1999/xlink"
     xmlns:gmd="http://www.isotc211.org/2005/gmd"
+    xmlns:eamp="http://environment.data.gov.uk/eamp"
     xmlns:geonet="http://www.fao.org/geonetwork"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     exclude-result-prefixes="#all">
@@ -42,7 +43,7 @@
     
     <!--  Change metadata standard name and version  -->
     <xsl:template match="//gmd:metadataStandardName"  priority="10">
-        <xsl:message>=== Updating Metadata Standard Name</xsl:message>
+        <xsl:message>=== Updating Metadata Standard Name - xml version ===</xsl:message>
         <gmd:metadataStandardName>
             <gco:CharacterString>ISO19139 non-spatial</gco:CharacterString>
         </gmd:metadataStandardName>
@@ -55,60 +56,70 @@
         </gmd:metadataStandardVersion>
         
     </xsl:template>
+
+    <xsl:template match="gmd:MD_DataIdentification">
+    <xsl:copy>
+      <xsl:copy-of select="@*" />
+
+      <xsl:copy-of select="gmd:citation" />
+      <xsl:copy-of select="gmd:abstract" />
+      <xsl:copy-of select="gmd:purpose" />
+      <xsl:copy-of select="gmd:credit" />
+      <xsl:copy-of select="gmd:status" />
+      <xsl:copy-of select="gmd:pointOfContact" />
+      <xsl:copy-of select="gmd:resourceMaintenance" />
+      <xsl:copy-of select="gmd:graphicOverview" />
+      <xsl:copy-of select="gmd:resourceFormat" />
+      <xsl:copy-of select="gmd:descriptiveKeywords" />
+      <!-- add a NonSpatial keyword if it doesn't exist already -->
+          <xsl:if test="not(./gmd:MD_Keywords/gmd:keyword/gco:CharacterString='NonSpatial')">
+            <xsl:message>=== No NonSpatial Keywords ===</xsl:message>
+              <gmd:descriptiveKeywords>
+                  <gmd:MD_Keywords>
+                      <gmd:keyword>
+                          <gco:CharacterString>NonSpatial</gco:CharacterString>
+                      </gmd:keyword>
+                      <gmd:type>
+                          <gmd:MD_KeywordTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_KeywordTypeCode" codeListValue="theme">theme</gmd:MD_KeywordTypeCode>
+                      </gmd:type>
+                  </gmd:MD_Keywords>
+              </gmd:descriptiveKeywords>
+          </xsl:if>
+      <xsl:copy-of select="gmd:resourceSpecificUsage" />
+      <xsl:copy-of select="gmd:resourceConstraints" />
+      <xsl:copy-of select="gmd:aggregationInfo" />
+      <xsl:copy-of select="gmd:language" />
+      <xsl:copy-of select="gmd:characterSet" />
+      <xsl:copy-of select="gmd:topicCategory" />
+      <xsl:copy-of select="gmd:environmentDescription" />
+      <xsl:copy-of select="gmd:extent" />
+      <xsl:copy-of select="gmd:supplementalInformation" />
+    </xsl:copy>
+  </xsl:template>
     
-    <!-- add a NonSpatial keyword if it doesn't exist already -->
-    <xsl:template match="//gmd:descriptiveKeywords/gmd:MD_Keywords" priority="10">
-        <!-- remember gmd:type which sits alongside the (multiple) keywords inside the MD_Keywords block --><gmd:MD_Keywords>
-        <xsl:choose>
-        <xsl:when test="not(gmd:keyword/gco:CharacterString='NonSpatial')">
-            <xsl:for-each select="./gmd:keyword/gco:CharacterString">
-                <xsl:variable name="keyword"><xsl:value-of select="."/></xsl:variable>
-                <gmd:keyword>
-                    <gco:CharacterString><xsl:value-of select="$keyword"/></gco:CharacterString>
-                </gmd:keyword>
-            </xsl:for-each>
-                <gmd:keyword>
-                   <gco:CharacterString>NonSpatial</gco:CharacterString> 
-                   </gmd:keyword>
-        </xsl:when>
-            <xsl:otherwise>
-                <xsl:for-each select="./gmd:keyword/gco:CharacterString">
-                    <xsl:variable name="keyword"><xsl:value-of select="."/></xsl:variable>
-                    <gmd:keyword>
-                        <gco:CharacterString><xsl:value-of select="$keyword"/></gco:CharacterString>
-                    </gmd:keyword>
-                </xsl:for-each>
-            </xsl:otherwise>
+    <!-- add a NonSpatial keyword to the free-text keyword block, if it doesn't exist already -->
+    <xsl:template match="//gmd:descriptiveKeywords[not(.//gmd:thesaurusName)]" priority="10">
+          <xsl:choose>
+              <xsl:when test="not(.//gmd:keyword/gco:CharacterString='NonSpatial')">
+                <xsl:message>=== No NonSpatial Keywords ===</xsl:message>
+                  <gmd:descriptiveKeywords>
+                  <xsl:copy-of select="*" copy-namespaces="no"/>
+                   <gmd:MD_Keywords>
+                      <gmd:keyword>
+                          <gco:CharacterString>NonSpatial</gco:CharacterString>
+                      </gmd:keyword>
+                      <gmd:type>
+                          <gmd:MD_KeywordTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_KeywordTypeCode" codeListValue="theme">theme</gmd:MD_KeywordTypeCode>
+                      </gmd:type>
+                  </gmd:MD_Keywords>
+                  </gmd:descriptiveKeywords>
+              </xsl:when>
+              <xsl:otherwise>
+                  <xsl:message>=== Got NonSpatial Keywords ===</xsl:message>
+                  <xsl:copy-of select="." copy-namespaces="no"/> 
+              </xsl:otherwise>
         </xsl:choose>
-        <gmd:type>
-            <gmd:MD_KeywordTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode" codeListValue="theme" />
-        </gmd:type>
-        </gmd:MD_Keywords>
-        
-        
-        <!--<xsl:for-each select="./gmd:keyword/gco:CharacterString">
-            <xsl:message>==== Keyword template matched: <xsl:value-of select="."/>====</xsl:message>
-            <xsl:variable name="keyword"><xsl:value-of select="."/></xsl:variable>
-            <xsl:choose>
-            <xsl:when test=".=normalize-space('NonSpatial')">
-                <xsl:message>==== Copying existing NonSpatial Keyword ====</xsl:message>
-                          <gmd:keyword>
-                            <gco:CharacterString><xsl:value-of select="$keyword"/></gco:CharacterString>
-                        </gmd:keyword>           
-           </xsl:when>
-               <xsl:otherwise>
-                   <xsl:message>==== Copying any other Keywords ====</xsl:message>
-                            <gmd:keyword>
-                               <gco:CharacterString><xsl:value-of select="$keyword"/></gco:CharacterString> 
-                           </gmd:keyword>
-                   <xsl:message>==== Add NonSpatial Keyword ====</xsl:message>
-                   <gmd:keyword>
-                       <gco:CharacterString>NonSpatial</gco:CharacterString> 
-                   </gmd:keyword>
-               </xsl:otherwise>
-              </xsl:choose>
-        </xsl:for-each>-->
-    </xsl:template>
+      </xsl:template>
     
     <!--  Change hierarchy level and level name  -->
      <xsl:template match="//gmd:hierarchyLevel" priority="10">
@@ -221,7 +232,7 @@
     <xsl:template match="geonet:*" priority="10"/>
     
     <xsl:template match="@*|node()">
-        <xsl:copy>
+        <xsl:copy copy-namespaces="no">
             <xsl:apply-templates select="@*|node()"/>
         </xsl:copy>
     </xsl:template>
