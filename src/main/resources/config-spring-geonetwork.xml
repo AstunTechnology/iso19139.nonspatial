@@ -30,7 +30,7 @@
                       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
   <bean id="iso19139.nonspatialSchemaPlugin"
-        class="org.fao.geonet.schema.iso19139_nonspatial.ISO19139NONSPATIALSchemaPlugin">
+        class="org.fao.geonet.schema.iso19139.ISO19139SchemaPlugin">
     <property name="xpathTitle">
       <util:list value-type="java.lang.String">
         <value>gmd:identificationInfo/*/gmd:citation/*/gmd:title/gco:CharacterString</value>
